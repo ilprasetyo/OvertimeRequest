@@ -18,5 +18,6 @@ namespace OvertimeRequest.Models
         public string Status { get; set; }
         public string Payroll { get; set; }
         public string Quota { get; set; }
+        public ICollection<EmployeeRequest> EmployeeRequests { get; set; }
     }
 }

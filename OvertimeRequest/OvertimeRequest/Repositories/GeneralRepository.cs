@@ -4,7 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static OvertimeRequest.Repositories.Interface.IGenericRepository;
+using OvertimeRequest.Repositories.Interface;
+
 
 namespace OvertimeRequest.Repositories
 {

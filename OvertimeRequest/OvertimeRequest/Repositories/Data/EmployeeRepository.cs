@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.Repositories.Data
 {
-    public class EmployeeRepository : GeneralRepository<Department, MyContext, int>
+    public class EmployeeRepository : GeneralRepository<Employee, MyContext, int>
     {
         private readonly MyContext myContext;
 

@@ -12,7 +12,7 @@ namespace OvertimeRequest.Models
     {
         [Key]
         public int Id { get; set; }
-        public ICollection<Employee> Employees { get; set; }
-        public ICollection<Request> Requests { get; set; }
+        public Employee Employee { get; set; }
+        public Request Request { get; set; }
     }
 }
