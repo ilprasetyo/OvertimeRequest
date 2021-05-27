@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.Repositories.Interface
 {
-    public interface IGenericRepository<Entity, TId> where Entity : class
+    interface IGenericRepository 
     {
-        IEnumerable<Entity> GetAll();
-        Entity GetById(TId Id);
-        int Post(Entity obj);
-        int Put(TId Id, Entity obj);
-        int Delete(TId Id);
+        public interface IGenericRepository<Entity, TId> where Entity : class
+        {
+            IEnumerable<Entity> GetAll();
+            Entity GetById(TId Id);
+            int Post(Entity obj);
+            int Put(TId Id,Entity obj);
+            int Delete(TId Id);
+        }
     }
 }
