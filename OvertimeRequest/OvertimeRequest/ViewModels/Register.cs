@@ -15,12 +15,7 @@ namespace OvertimeRequest.ViewModels
         public string Gender { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
-        public StatusRequest Status { get; set; }
-        
-        public enum StatusRequest
-        {
-            Waiting,
-            Approve,
-            Reject
-        }
+        public string Status { get; set; }
+        public int Position { get; set; }
+    }
 }
