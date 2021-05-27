@@ -152,23 +152,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ASUS\\.nuget\\packages\\": {},
+    "C:\\Users\\ilpra\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ASUS\\Documents\\GitHub\\OvertimeRequest\\OvertimeRequest\\OvertimeRequestMVC\\OvertimeRequestMVC.csproj",
+      "projectUniqueName": "E:\\Kerjaan\\Project\\OvertimeRequest\\OvertimeRequest\\OvertimeRequestMVC\\OvertimeRequestMVC.csproj",
       "projectName": "OvertimeRequestMVC",
-      "projectPath": "C:\\Users\\ASUS\\Documents\\GitHub\\OvertimeRequest\\OvertimeRequest\\OvertimeRequestMVC\\OvertimeRequestMVC.csproj",
-      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ASUS\\Documents\\GitHub\\OvertimeRequest\\OvertimeRequest\\OvertimeRequestMVC\\obj\\",
+      "projectPath": "E:\\Kerjaan\\Project\\OvertimeRequest\\OvertimeRequest\\OvertimeRequestMVC\\OvertimeRequestMVC.csproj",
+      "packagesPath": "C:\\Users\\ilpra\\.nuget\\packages\\",
+      "outputPath": "E:\\Kerjaan\\Project\\OvertimeRequest\\OvertimeRequest\\OvertimeRequestMVC\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ilpra\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
