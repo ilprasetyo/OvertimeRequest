@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.Repositories.Data
 {
-    public class PositionRepository: GeneralRepository<Position, MyContext, int>
+    public class PositionRepository :  GeneralRepository<Position, MyContext, int>
     {
-        private readonly MyContext myContext;
+          private readonly MyContext myContext;
 
-        public PositionRepository(MyContext myContext) : base(myContext)
-        {
+    public PositionRepository(MyContext myContext) : base(myContext)
+    {
 
-        }
     }
+}
 }

@@ -6,12 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using OvertimeRequest.Repositories.Interface;
 
-
 namespace OvertimeRequest.Repositories
 {
     public class GeneralRepository<Entity, TContext, TId> : IGenericRepository<Entity, TId>
-        where Entity : class
-        where TContext : MyContext
+         where Entity : class
+         where TContext : MyContext
     {
         private readonly MyContext context;
 

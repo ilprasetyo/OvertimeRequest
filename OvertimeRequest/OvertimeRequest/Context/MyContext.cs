@@ -79,5 +79,6 @@ namespace OvertimeRequest.Context
             .WithMany()
             .HasForeignKey(Manager => Manager.ManagerId);
         }
+
     }
 }

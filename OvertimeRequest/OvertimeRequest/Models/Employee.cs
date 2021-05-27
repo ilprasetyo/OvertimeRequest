@@ -12,7 +12,7 @@ namespace OvertimeRequest.Models
     {
         [Key, ForeignKey(nameof(Manager))]
         public string NIK { get; set; }
-#nullable enable
+        #nullable enable
         public string? ManagerId { get; set; }
         public string? Name { get; set; }
         public DateTime BirthDate { get; set; }

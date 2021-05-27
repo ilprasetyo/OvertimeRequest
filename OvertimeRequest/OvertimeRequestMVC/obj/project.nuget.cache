@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Db3cgqXS69f1FKK9skaESXS/lNmqsfkNRTZ7pgQ3LcwVSyPUv39Y3k7iiPJmTNAD/S7sqBitaTgx0wXSIajvCQ==",
+  "dgSpecHash": "3H4zYE6xhWruh2e9dFGTdfLxGB5wrn2ubd8Rw1xFcJYdDRJahNgvMctjkzabEOnRLDqBPYGseLFI9kAk2ajXvA==",
   "success": true,
   "projectFilePath": "E:\\Kerjaan\\Project\\OvertimeRequest\\OvertimeRequest\\OvertimeRequestMVC\\OvertimeRequestMVC.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\ilpra\\.nuget\\packages\\bcrypt.net-next\\4.0.2\\bcrypt.net-next.4.0.2.nupkg.sha512",
+    "C:\\Users\\ilpra\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
+    "C:\\Users\\ilpra\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512"
+  ],
   "logs": []
 }
