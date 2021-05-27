@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OvertimeRequest.Context;
+using OvertimeRequest.Repositories;
+using OvertimeRequest.Repositories.Data;
+using OvertimeRequest.Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +33,22 @@ namespace OvertimeRequest
             services.AddControllers();
             services.AddDbContext<MyContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
+
+            //Register dapper in scope    
+            services.AddScoped<IGenericDapper, GeneralDapper>();
+
+            services.AddScoped<AccountRepository>();
+            services.AddScoped<DepartmentRepository>();
+            services.AddScoped<EmployeeRepository>();
+            services.AddScoped<EmployeeRequestRepository>();
+            services.AddScoped<EmployeeRoleRepository>();
+            services.AddScoped<ParameterRepository>();
+            services.AddScoped<PositionRepository>();
+            services.AddScoped<RequestRepository>();
+            services.AddScoped<RoleRepository>();
+
+           //services.AddTokenAuthentication(Configuration);
+
 
         }
 

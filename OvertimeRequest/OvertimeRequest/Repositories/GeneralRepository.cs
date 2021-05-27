@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OvertimeRequest.Context;
+using OvertimeRequest.Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static OvertimeRequest.Repositories.Interface.IGenericRepository;
+
 
 namespace OvertimeRequest.Repositories
 {
@@ -46,9 +47,8 @@ namespace OvertimeRequest.Repositories
             return result;
         }
 
-        public int Put(TId Id, Entity obj)
+        public int Put(Entity obj)
         {
-            context.Set<Entity>().Find(Id);
             context.Set<Entity>().Attach(obj);
             context.Entry(obj).State = EntityState.Modified;
             var result = context.SaveChanges();
