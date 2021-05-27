@@ -74,3 +74,5 @@ C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMV
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\OvertimeRequestMVC.dll
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\OvertimeRequestMVC.pdb
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\OvertimeRequestMVC.genruntimeconfig.cache
+E:\Kerjaan\Project\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\bin\Debug\netcoreapp3.1\BCrypt.Net-Next.dll
+E:\Kerjaan\Project\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\bin\Debug\netcoreapp3.1\Dapper.dll
