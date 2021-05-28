@@ -13,3 +13,4 @@ namespace OvertimeRequest.Repositories.Interface
         int Put(Entity obj);
         int Delete(TId Id);
     }
+}
