@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OvertimeRequest.Base;
 using OvertimeRequest.Models;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeRoleController : BaseController<EmployeeRole, EmployeeRoleRepository, int>

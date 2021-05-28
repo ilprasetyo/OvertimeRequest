@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : BaseController<Account, AccountRepository, int>
@@ -85,6 +86,7 @@ namespace OvertimeRequest.Controllers
         }
 
         [HttpPost("ChangePassword")]
+        [Authorize]
         public ActionResult ChangePassword(string email, string oldPassword, string newPassword)
         {
             try
@@ -142,7 +144,7 @@ namespace OvertimeRequest.Controllers
         }
 
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         [Route("resetpassword")]
         public ActionResult ResetPassword(string email, string newPassword, string confirmPassword)
