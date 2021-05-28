@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OvertimeRequest.Context;
+using OvertimeRequest.Repositories;
 using OvertimeRequest.Repositories.Data;
 using OvertimeRequest.Repositories.Interface;
 using System;
@@ -64,7 +65,7 @@ namespace OvertimeRequest
             services.AddScoped<RequestRepository>();
             services.AddScoped<RoleRepository>();
 
-            //services.AddScoped<IGenericDapper, GeneralDapper>();
+            services.AddScoped<IGenericDapper, GeneralDapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +79,8 @@ namespace OvertimeRequest
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
