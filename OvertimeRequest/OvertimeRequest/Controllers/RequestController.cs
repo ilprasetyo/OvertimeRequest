@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Employee, Manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class RequestController : BaseController<Request, RequestRepository, int>
