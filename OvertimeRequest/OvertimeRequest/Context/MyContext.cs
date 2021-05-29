@@ -78,6 +78,12 @@ namespace OvertimeRequest.Context
             .HasOne(Employee => Employee.Manager)
             .WithMany()
             .HasForeignKey(Manager => Manager.ManagerId);
+
+            //Email should be unique
+            modelBuilder.Entity<Employee>()
+                .HasIndex(employee => employee.Email)
+                .IsUnique();
+
         }
 
     }
