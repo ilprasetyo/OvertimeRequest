@@ -9,19 +9,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace OvertimeRequest.Controllers
 {
+    
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
-    public class EmployeeRoleController : BaseController<EmployeeRole, EmployeeRoleRepository, int>
+    public class DepartmentController : BaseController<Department, DepartmentRepository, int>
     {
-        private EmployeeRoleRepository employeeRoleRepository;
-
-        public EmployeeRoleController(EmployeeRoleRepository employeeRoleRepository) : base(employeeRoleRepository)
+        private DepartmentRepository departmentRepository;
+        public DepartmentController(DepartmentRepository departmentRepository) : base(departmentRepository)
         {
-            this.employeeRoleRepository = employeeRoleRepository;
+            this.departmentRepository = departmentRepository;
         }
+
     }
 }

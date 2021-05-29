@@ -41,7 +41,6 @@ namespace OvertimeRequest.Controllers
         {
             var password = Hash.HashPassword(register.Password);
             var dbparams = new DynamicParameters();
-            dbparams.Add("NIK", register.NIK, DbType.String);
             dbparams.Add("Name", register.Name, DbType.String);
             dbparams.Add("Email", register.Email, DbType.String);
             dbparams.Add("Password", password, DbType.String);
@@ -84,98 +83,90 @@ namespace OvertimeRequest.Controllers
         }
 
         [HttpPost("ChangePassword")]
-        public ActionResult ChangePassword()
+        public ActionResult ChangePassword(string email, string oldPassword, string newPassword)
         {
 
-            var email = Request.Headers["Email"].ToString();
-            var CurrentPassword = Request.Headers["CurrentPassword"].ToString();
-            var NewPassword = Request.Headers["NewPassword"].ToString();
-            var VerifyPassword = Request.Headers["VerifyPassword"].ToString();
-            var cek = myContext.Accounts.Where(account => account.Employee.Email == email).FirstOrDefault();
-
-            if (cek == null || !BCrypt.Net.BCrypt.Verify(CurrentPassword, cek.Password))
+            try
             {
-
-                return NotFound("Gagal");
-
+                var user = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == email);
+                var passwordCheck = Hash.ValidatePassword(oldPassword, user.Password);
+                if (user != null && passwordCheck)
+                {
+                    var newPass = Hash.HashPassword(newPassword);
+                    user.Password = newPass;
+                    var save = myContext.SaveChanges();
+                    if (save > 0)
+                    {
+                        return Ok("Password has been changed.");
+                    }
+                }
+                return BadRequest("Your password is incorrect.");
             }
-            else if (NewPassword != VerifyPassword)
+            catch (Exception e)
             {
-                return BadRequest("Password Baru dan Verify Password Berbeda");
+                return BadRequest(e.InnerException);
             }
-            else
-            {
-                string passwordHash = BCrypt.Net.BCrypt.HashPassword(NewPassword);
-                cek.Password = passwordHash;
-                var result = accountRepository.Put(cek) > 0 ? (ActionResult)Ok("Data berhasil diupdate") : BadRequest("Data gagal diupdate");
-                return result;
-            }
+            //return Ok();
         }
 
         [HttpPost("ForgotPassword")]
-        public ActionResult ForgotPassword()
+        public ActionResult ForgotPassword(string email)
         {
-            var email = Request.Headers["Email"].ToString();
-            var getUser = myContext.Accounts.Where(e => e.Employee.Email == email).FirstOrDefault();
-            string resetCode = Guid.NewGuid().ToString();
-            if (getUser == null)
+            try
             {
-                return NotFound("Email salah");
+                //var email = Request.Headers["email"].ToString();
+                var userExisting = myContext.Employees.SingleOrDefault(e => e.Email == email);
+                //var role = context.Employees.SingleOrDefault(e => e.Id == userExisting.Id);
+                string resetCode = Guid.NewGuid().ToString();
+                if (userExisting.Email == email)
+                {
+                    var getEmployee = myContext.Employees.Where(e => e.NIK == userExisting.NIK).FirstOrDefault();
+                    var jwt = new JwtServices(_configuration);
+                    var token = jwt.GenerateSecurityToken(email);
+                    string url = "https://localhost:44323/api/Account/ResetPassword?Token=";
+
+                    //send email
+                    var sendEmail = new SendEmail(myContext);
+                    sendEmail.SendEmailForgotPassword(url, token, getEmployee);
+                    return Ok("Check Your Email");
+                }
+                return BadRequest("Email not found.");
             }
-            else
+            catch (Exception e)
             {
-                var getEmployee = myContext.Employees.Where(e => e.NIK == getUser.NIK).FirstOrDefault();
-                var jwt = new JwtServices(_configuration);
-                var token = jwt.GenerateSecurityToken(email);
-                string url = "https://localhost:44323/api/Account/ResetPassword?Token=";
-
-                //send email
-                var sendEmail = new SendEmail(myContext);
-                sendEmail.SendEmailForgotPassword(url, token, getEmployee);
-                return Ok("Check Your Email");
-
+                return BadRequest(e.Message);
             }
 
         }
 
 
         [HttpPost("ResetPassword")]
-        public ActionResult ResetPassword()
+        public ActionResult ResetPassword(string email, string newPassword, string confirmPassword)
         {
-            string token = Request.Query["Token"].ToString();
-
-            var jwt = new JwtSecurityTokenHandler();
-
-            var jwtRead = jwt.ReadJwtToken(token);
-
-            var NewPassword = Request.Headers["NewPassword"].ToString();
-            var VerifyPassword = Request.Headers["VerifyPassword"].ToString();
-
-            if (NewPassword == VerifyPassword)
+            try
             {
-                var email = jwtRead.Claims.First(email => email.Type == "email").Value;
-                var cek = myContext.Accounts.Where(account => account.Employee.Email == email).FirstOrDefault();
-                if (cek == null)
+                var userExisting = myContext.Employees.SingleOrDefault(e => e.Email == email);
+                var passwordExisting = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == email);
+                if (userExisting.Email == email)
                 {
-                    return NotFound("Email Salah");
+                    if (newPassword == confirmPassword)
+                    {
+                        passwordExisting.Password = Hash.HashPassword(newPassword);
+                        var save = myContext.SaveChanges();
+                        if (save > 0)
+                        {
+                            return Ok("Your password has been changed.");
+                        }
+                    }
+                    return BadRequest("Your confirmation password is incorrect.");
                 }
-                else
-                {
-                    string passwordHash = BCrypt.Net.BCrypt.HashPassword(NewPassword);
-                    cek.Password = passwordHash;
-
-                    //update
-                    var result = accountRepository.Put(cek) > 0 ? (ActionResult)Ok("Data berhasil diupdate") : BadRequest("Data gagal diupdate");
-                    return result;
-                }
-
+                return BadRequest("Email not found.");
             }
-
-            else
+            catch (Exception e)
             {
-                return BadRequest("Password tidak sesuai");
+                return BadRequest(e.Message);
             }
-
+            //return Ok();
         }
 
     }

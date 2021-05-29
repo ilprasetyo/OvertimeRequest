@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OvertimeRequest.Base;
 using OvertimeRequest.Models;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace OvertimeRequest.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class PositionController : BaseController<Position, PositionRepository, int>
     {
