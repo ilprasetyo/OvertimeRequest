@@ -47,7 +47,7 @@ namespace OvertimeRequest.Handlers
 
         }
 
-        public void SendEmailRequestToManager(Employee employee)
+        public void SendEmailRequestToManager(Employee manager, Employee employee)
         {
             var parameter = context.Parameters.Find(1);
 
@@ -58,11 +58,11 @@ namespace OvertimeRequest.Handlers
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.Credentials = new NetworkCredential(parameter.Name, parameter.Value);
 
-            smtp.Send(parameter.Name, employee.Email, "Overtime Request", $"NIK : {employee.NIK} \nName : {employee.Name} \nThis Employee Request for Overtime");
+            smtp.Send(parameter.Name, manager.Email, "Overtime Request", $"NIK : {employee.NIK} \nName : {employee.Name} \nThis Employee Request for Overtime");
 
         }
 
-        public void SendEmailApproveManager(Employee employee)
+        public void SendEmailApproveManager(Employee payroll, Employee employee)
         {
             var parameter = context.Parameters.Find(1);
 
@@ -73,7 +73,7 @@ namespace OvertimeRequest.Handlers
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.Credentials = new NetworkCredential(parameter.Name, parameter.Value);
 
-            smtp.Send(parameter.Name, employee.Email, "Overtime Request", $"NIK : {employee.NIK} \nName : {employee.Name} \nThis Employee Request for Overtime");
+            smtp.Send(parameter.Name, payroll.Email, "Overtime Request", $"NIK : {employee.NIK} \nName : {employee.Name} \nThis Employee Request for Overtime");
 
         }
 
