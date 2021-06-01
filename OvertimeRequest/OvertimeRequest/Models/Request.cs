@@ -15,15 +15,9 @@ namespace OvertimeRequest.Models
         public DateTime StartHours { get; set; }
         public DateTime EndHours { get; set; }
         public string Reason { get; set; }
-        public StatusRequest Status { get; set; }
+        public string Status { get; set; }
         public int Payroll { get; set; }
-        public int Quota { get; set; }
         public ICollection<EmployeeRequest> EmployeeRequests { get; set; }
-        public enum StatusRequest
-        {
-            Waiting,
-            Approved,
-            Reject
-        }
+      
     }
 }

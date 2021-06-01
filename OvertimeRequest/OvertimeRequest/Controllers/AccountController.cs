@@ -43,7 +43,6 @@ namespace OvertimeRequest.Controllers
         {
             var password = Hash.HashPassword(register.Password);
             var dbparams = new DynamicParameters();
-            dbparams.Add("NIK", register.NIK, DbType.String);
             dbparams.Add("Name", register.Name, DbType.String);
             dbparams.Add("Email", register.Email, DbType.String);
             dbparams.Add("Password", password, DbType.String);

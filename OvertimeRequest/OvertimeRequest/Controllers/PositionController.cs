@@ -13,6 +13,7 @@ namespace OvertimeRequest.Controllers
 {
     [Authorize(Roles = "Employee, Manager, Payroll")]
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class PositionController : BaseController<Position, PositionRepository, int>
     {

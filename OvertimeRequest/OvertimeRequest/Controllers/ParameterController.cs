@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace OvertimeRequest.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ParameterController : BaseController<Parameter, ParameterRepository, int>
     {

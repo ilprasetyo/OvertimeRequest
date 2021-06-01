@@ -21,6 +21,7 @@ namespace OvertimeRequest.Models
         public string? Address { get; set; }
         public string? Phone { get; set; }
         public string? Status { get; set; }
+        public int Quota { get; set; }
         public Account? Account { get; set; }
         public Position? Position { get; set; }
         public ICollection<EmployeeRole>? EmployeeRoles { get; set; }

@@ -9,10 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace OvertimeRequest.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class EmployeeRoleController : BaseController<EmployeeRole, EmployeeRoleRepository, int>
     {
