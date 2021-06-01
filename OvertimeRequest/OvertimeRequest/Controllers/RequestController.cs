@@ -19,9 +19,8 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.Controllers
 {
-    [Authorize(Roles = "Employee, Manager")]
+    //[Authorize(Roles = "Employee, Manager, Payroll")]
     [Route("api/[controller]")]
-   // [Authorize]
     [ApiController]
     public class RequestController : BaseController<Request, RequestRepository, int>
     {
@@ -47,11 +46,11 @@ namespace OvertimeRequest.Controllers
             
             var dbprams = new DynamicParameters();
             dbprams.Add("NIK", requestVM.NIK, DbType.String);
-            dbprams.Add("StartHours", requestVM.StartHours, DbType.DateTime);
-            dbprams.Add("EndHours", requestVM.EndHours, DbType.DateTime);
-            dbprams.Add("Reason", requestVM.Reason, DbType.String);
+            dbprams.Add("start", requestVM.start, DbType.DateTime);
+            dbprams.Add("end", requestVM.end, DbType.DateTime);
+            dbprams.Add("reason", requestVM.reason, DbType.String);
 
-            var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_OvertimeRequest]"
+            var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_Request]"
                 , dbprams,
                 commandType: CommandType.StoredProcedure));
             //send email
@@ -72,7 +71,7 @@ namespace OvertimeRequest.Controllers
             dbprams.Add("RequestId", responseVM.RequestId, DbType.Int32);
             dbprams.Add("NIK", responseVM.NIK, DbType.String);
 
-            var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_ApproveManager]"
+            var result = Task.FromResult(_dapper.Insert<dynamic>("[dbo].[SP_ApproveManager]"
                 , dbprams,
                 commandType: CommandType.StoredProcedure));
             //send email
@@ -91,7 +90,7 @@ namespace OvertimeRequest.Controllers
             dbprams.Add("RequestId", responseVM.RequestId, DbType.Int32);
             dbprams.Add("NIK", responseVM.NIK, DbType.String);
 
-            var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_RejectManager]"
+            var result = Task.FromResult(_dapper.Insert<dynamic>("[dbo].[SP_RejectManager]"
                 , dbprams,
                 commandType: CommandType.StoredProcedure));
             //send email
@@ -112,7 +111,7 @@ namespace OvertimeRequest.Controllers
             dbprams.Add("start", approveVM.start, DbType.DateTime);
             dbprams.Add("end", approveVM.end, DbType.DateTime);
 
-            var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_ApprovePayroll]"
+            var result = Task.FromResult(_dapper.Insert<dynamic>("[dbo].[SP_ApprovePayroll]"
                 , dbprams,
                 commandType: CommandType.StoredProcedure));
             //send email
@@ -131,7 +130,7 @@ namespace OvertimeRequest.Controllers
             dbprams.Add("RequestId", responseVM.RequestId, DbType.Int32);
             dbprams.Add("NIK", responseVM.NIK, DbType.String);
 
-            var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_RejectPayroll]"
+            var result = Task.FromResult(_dapper.Insert<dynamic>("[dbo].[SP_RejectPayroll]"
                 , dbprams,
                 commandType: CommandType.StoredProcedure));
             //send email
