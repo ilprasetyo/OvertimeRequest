@@ -99,7 +99,7 @@ namespace OvertimeRequestMVC.Controllers
             }
         }
 
-        public string RegisterMemberAPI(Register register)
+        public string RegisterAPI(Register register)
         {
             var client = new HttpClient();
             StringContent stringContent = new StringContent(JsonConvert.SerializeObject(register), Encoding.UTF8, "application/json");

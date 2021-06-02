@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OvertimeRequestMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace OvertimeRequestMVC.Controllers
@@ -20,12 +24,42 @@ namespace OvertimeRequestMVC.Controllers
 
         public IActionResult Index()
         {
+            var token = HttpContext.Session.GetString("JWToken");
+
+
+            if (token != null)
+            {
+                var jwtReader = new JwtSecurityTokenHandler();
+                var jwt = jwtReader.ReadJwtToken(token);
+
+                var email = jwt.Claims.First(c => c.Type == "unique_name").Value;
+                ViewData["token"] = email;
+                return View();
+            }
+            return Unauthorized();
+        }
+
+        public IActionResult GetRequest()
+        {
             return View();
         }
 
-        public IActionResult Privacy()
+        public string GetRequestAPI()
         {
-            return View();
+            var token = HttpContext.Session.GetString("JWToken");
+            if (token != null)
+            {
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var result = client.GetAsync("https://localhost:44323/api/Request").Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var projects = result.Content.ReadAsStringAsync();
+                    ViewData["projects"] = projects;
+                    return Url.Action("GetProjects", "Home");
+                }
+            }
+            return "Unauthorized";
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
