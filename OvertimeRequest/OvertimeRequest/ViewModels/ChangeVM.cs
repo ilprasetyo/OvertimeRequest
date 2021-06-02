@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.ViewModels
 {
-    public class Change
+    public class ChangeVM
     {
         public string email { get; set; }
         public string oldPassword { get; set; }
