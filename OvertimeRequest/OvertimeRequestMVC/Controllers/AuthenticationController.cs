@@ -5,6 +5,7 @@ using OvertimeRequest.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -19,101 +20,42 @@ namespace OvertimeRequestMVC.Controllers
             return View();
         }
 
-        public IActionResult ForgotPassword()
+        [HttpPost]
+        public HttpStatusCode Register(Register register)
         {
-            return View();
+            var httpClient = new HttpClient();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(register), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync("https://localhost:44323/api/Account/Register", content).Result;
+            return result.StatusCode;
         }
 
-        public IActionResult Register()
+        [HttpPost]
+        public HttpStatusCode ForgotPassword(ForgotVM forgotVM)
         {
-            return View();
+            var url = "https://localhost:44323/api/Account/ForgotPassword";
+            var httpClient = new HttpClient();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(forgotVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync(url, content).Result;
+            return result.StatusCode;
         }
 
-        public IActionResult ChangePassword()
+        [HttpPost]
+        public HttpStatusCode ResetPassword(ResetVM resetVM)
         {
-            return View();
+            var url = "https://localhost:44323/api/Account/ResetPassword";
+            var httpClient = new HttpClient();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(resetVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync(url, content).Result;
+            return result.StatusCode;
         }
 
-        public IActionResult ResetPassword()
+        [HttpPost]
+        public HttpStatusCode Login(Login login)
         {
-            if (Request.Query.ContainsKey("token"))
-            {
-                var token = Request.Query["token"].ToString();
-                ViewData["token"] = token;
-                return View();
-            }
-            return NotFound();
-        }
-
-        public IActionResult ResetPasswordAPI(Reset reset)
-        {
-            var client = new HttpClient();
-            StringContent stringContent = new StringContent(JsonConvert.SerializeObject(reset), Encoding.UTF8, "application/json");
-            var result = client.PutAsync("https://localhost:44323/api/Account/ResetPassword", stringContent).Result;
-            if (result.IsSuccessStatusCode)
-            {
-                return Ok(new { result });
-            }
-            else
-            {
-                return BadRequest(new { result });
-            }
-        }
-
-        public IActionResult ForgotPasswordAPI(Forgot forgot)
-        {
-            var client = new HttpClient();
-            StringContent stringContent = new StringContent(JsonConvert.SerializeObject(forgot), Encoding.UTF8, "application/json");
-            var result = client.PostAsync("https://localhost:44323/api/Account/ForgotPassword", stringContent).Result;
-            if (result.IsSuccessStatusCode)
-            {
-                return Ok(new { result });
-            }
-            else
-            {
-                return BadRequest(new { result });
-            }
-        }
-
-        public string LoginAPI(Login login)
-        {
-            var client = new HttpClient();
-            StringContent stringContent = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
-            var result = client.PostAsync("https://localhost:44323/api/Account/Login", stringContent).Result;
-            var token = result.Content.ReadAsStringAsync().Result;
-
-            HttpContext.Session.SetString("JWToken", token);
-
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            if (result.IsSuccessStatusCode)
-            {
-                //return RedirectToRoute(new { action = "Index", controller = "Home", area = "" });
-                //return Ok(new { result });
-                return Url.Action("Index", "Home");
-            }
-            else
-            {
-                return "Error";
-                //return BadRequest(new { result });
-            }
-        }
-
-        public string RegisterAPI(Register register)
-        {
-            var client = new HttpClient();
-            StringContent stringContent = new StringContent(JsonConvert.SerializeObject(register), Encoding.UTF8, "application/json");
-            var result = client.PostAsync("https://localhost:44323/api/Account/Register", stringContent).Result;
-            if (result.IsSuccessStatusCode)
-            {
-                //return Ok(new { result });
-                return Url.Action("Index", "Authentication");
-            }
-            else
-            {
-                //return BadRequest(new { result });
-                return "Error";
-            }
+            var httpClient = new HttpClient();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync("https://localhost:44323/api/Account/Login", content).Result;
+            return result.StatusCode;
         }
 
 
