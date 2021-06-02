@@ -8,13 +8,13 @@
                 <img src="~/formlog/images/img-01.png" alt="IMG">
             </div>
 
-            <form class="login100-form validate-form">
+            <form class="login100-form validate-form" id="LoginForm">
                 <span class="login100-form-title">
                     Login Account
                 </span>
 
                 <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                    <input class="input100" type="text" name="email" placeholder="Email">
+                    <input class="input100" type="text" name="email" placeholder="Email" id="email">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="Password is required">
-                    <input class="input100" type="password" name="pass" placeholder="Password">
+                    <input class="input100" type="password" name="pass" placeholder="Password" id="password">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn">
+                    <button class="login100-form-btn" type="submit">
                         Login
                     </button>
                 </div>
@@ -54,3 +54,36 @@
         </div>
     </div>
 </div>
+
+@section customScripts{
+
+    <script>
+        $(document).ready(function () {
+            $('#LoginForm').submit(function (e) {
+                e.preventDefault();
+                login();
+            })
+        })
+        const login = () => {
+            let User = {
+                email: $("#email").val(),
+                password: $("#password").val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "Authentication/LoginAPI",
+                data: User,
+                success: (data) => {
+                    window.location.href = data
+                    console.log(data)
+                    //alert(data)
+                },
+                error: (data) => {
+                    console.log(data)
+                    //alert(data)
+                }
+            });
+        }
+    </script>
+
+}

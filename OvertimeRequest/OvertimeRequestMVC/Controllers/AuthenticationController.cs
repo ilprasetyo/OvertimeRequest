@@ -36,6 +36,11 @@ namespace OvertimeRequestMVC.Controllers
 
         public IActionResult ResetPassword()
         {
+            return View();
+        }
+
+        public IActionResult ResetPasswords()
+        {
             if (Request.Query.ContainsKey("token"))
             {
                 var token = Request.Query["token"].ToString();
