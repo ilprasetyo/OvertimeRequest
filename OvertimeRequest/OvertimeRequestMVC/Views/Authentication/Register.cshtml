@@ -141,13 +141,12 @@
                 success: (data) => {
                     console.log(data)
                     //alert(data)
-                    swal({
-                        title: "Good job!",
-                        text: "You clicked the button!",
-                        icon: "success",
-                        button: "Ok",
+                    Swal.fire({
+                        text: 'Register has been sent to your address',
+                        icon: 'success',
+                        timer: 10000
                     }).then(() => {
-                        alert(data)
+                        window.location.href = data;
                     })
 
                 },

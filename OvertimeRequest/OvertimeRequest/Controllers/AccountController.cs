@@ -123,7 +123,7 @@ namespace OvertimeRequest.Controllers
                 {
                     var getEmployee = myContext.Employees.Where(e => e.NIK == userExisting.NIK).FirstOrDefault();
                     var jwt = new JwtServices(_configuration);
-                    var token = jwt.GenerateSecurityToken(email);
+                    var token = jwt.GenerateSecurityToken(forgotVM.email);
                     string url = "https://localhost:44393/Authentication/ResetPassword?Token=";
 
                     //send email
