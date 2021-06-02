@@ -85,16 +85,15 @@ namespace OvertimeRequest.Controllers
         }
 
         [HttpPost("ChangePassword")]
-        [Authorize]
-        public ActionResult ChangePassword(string email, string oldPassword, string newPassword)
+        public ActionResult ChangePassword(ChangeVM changeVM)
         {
             try
             {
-                var user = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == email);
-                var passwordCheck = Hash.ValidatePassword(oldPassword, user.Password);
+                var user = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == changeVM.email);
+                var passwordCheck = Hash.ValidatePassword(changeVM.oldPassword, user.Password);
                 if (user != null && passwordCheck)
                 {
-                    var newPass = Hash.HashPassword(newPassword);
+                    var newPass = Hash.HashPassword(changeVM.newPassword);
                     user.Password = newPass;
                     var save = myContext.SaveChanges();
                     if (save > 0)
@@ -112,15 +111,15 @@ namespace OvertimeRequest.Controllers
         }
 
         [HttpPost("ForgotPassword")]
-        public ActionResult ForgotPassword(string email)
+        public ActionResult ForgotPassword(ForgotVM forgotVM)
         {
             try
             {
                 //var email = Request.Headers["email"].ToString();
-                var userExisting = myContext.Employees.SingleOrDefault(e => e.Email == email);
+                var userExisting = myContext.Employees.SingleOrDefault(e => e.Email == forgotVM.email);
                 //var role = context.Employees.SingleOrDefault(e => e.Id == userExisting.Id);
                 string resetCode = Guid.NewGuid().ToString();
-                if (userExisting.Email == email)
+                if (userExisting.Email == forgotVM.email)
                 {
                     var getEmployee = myContext.Employees.Where(e => e.NIK == userExisting.NIK).FirstOrDefault();
                     var jwt = new JwtServices(_configuration);
@@ -143,20 +142,18 @@ namespace OvertimeRequest.Controllers
         }
 
 
-        [Authorize]
-        [HttpPost]
-        [Route("resetpassword")]
-        public ActionResult ResetPassword(string email, string newPassword, string confirmPassword)
+        [HttpPost("ResetPassword")]
+        public ActionResult ResetPassword(ResetVM resetVM)
         {
             try
             {
-                var userExisting = myContext.Employees.SingleOrDefault(e => e.Email == email);
-                var passwordExisting = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == email);
-                if (userExisting.Email == email)
+                var userExisting = myContext.Employees.SingleOrDefault(e => e.Email == resetVM.email);
+                var passwordExisting = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == resetVM.email);
+                if (userExisting.Email == resetVM.email)
                 {
-                    if (newPassword == confirmPassword)
+                    if (resetVM.newPassword == resetVM.confirmPassword)
                     {
-                        passwordExisting.Password = Hash.HashPassword(newPassword);
+                        passwordExisting.Password = Hash.HashPassword(resetVM.newPassword);
                         var save = myContext.SaveChanges();
                         if (save > 0)
                         {

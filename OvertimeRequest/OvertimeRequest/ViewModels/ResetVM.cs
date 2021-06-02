@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.ViewModels
 {
-    public class Reset
+    public class ResetVM
     {
         public string email { get; set; }
         public string newPassword { get; set; }
-        public string oldPassword { get; set; }
+        public string confirmPassword { get; set; }
     }
 }
