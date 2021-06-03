@@ -19,8 +19,9 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.Controllers
 {
+    // [Authorize(Roles = "Employee, Manager, Payroll")]
     [Route("api/[controller]")]
-   // [Authorize]
+    // [Authorize]
     [ApiController]
     public class RequestController : BaseController<Request, RequestRepository, int>
     {
@@ -40,24 +41,171 @@ namespace OvertimeRequest.Controllers
         [HttpPost("RequestEmployee")]
         public ActionResult RequestEmployee(RequestVM requestVM)
         {
-           
+
             var getEmployee = myContext.Employees.Where(e => e.NIK == requestVM.NIK).FirstOrDefault();
+            var getManager = myContext.Employees.Where(e => e.NIK == getEmployee.ManagerId).FirstOrDefault();
 
-           
-                var dbprams = new DynamicParameters();
-                dbprams.Add("NIK", requestVM.NIK, DbType.String);
-                dbprams.Add("StartHours", requestVM.StartHours, DbType.DateTime);
-                dbprams.Add("EndHours", requestVM.EndHours, DbType.DateTime);
-                dbprams.Add("Reason", requestVM.Reason, DbType.String);
 
-                var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_OvertimeRequest]"
-                    , dbprams,
-                    commandType: CommandType.StoredProcedure));
-                //send email
-                var sendEmail = new SendEmail(myContext);
-                sendEmail.SendEmailSubmitRequest(getEmployee);
-            
-                return Ok(new { Status = "Success", Message = "Request Has Been Sent, Check your email" });
+            var dbprams = new DynamicParameters();
+            dbprams.Add("NIK", requestVM.NIK, DbType.String);
+            dbprams.Add("StartHours", requestVM.StartHours, DbType.DateTime);
+            dbprams.Add("EndHours", requestVM.EndHours, DbType.DateTime);
+            dbprams.Add("Reason", requestVM.Reason, DbType.String);
+
+            var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_OvertimeRequest]"
+                , dbprams,
+                commandType: CommandType.StoredProcedure));
+            //send email
+            var sendEmail = new SendEmail(myContext);
+            sendEmail.SendEmailSubmitRequest(getEmployee);
+            sendEmail.SendEmailRequestToManager(getManager, getEmployee);
+
+            return Ok(new { Status = "Success", Message = "Request Has Been Sent, Check your email" });
+        }
+
+        [HttpPost("ApproveManager")]
+        public ActionResult ApproveManager(ResponseVM responseVM)
+        {
+
+            var getEmployee = myContext.Employees.Where(e => e.NIK == responseVM.NIK).FirstOrDefault();
+            var getPayroll = myContext.Employees.Where(e => e.NIK.Contains("EMP04012105")).FirstOrDefault();
+
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("RequestId", responseVM.RequestId, DbType.Int32);
+            dbprams.Add("NIK", responseVM.NIK, DbType.String);
+
+            var result = Task.FromResult(_dapper.Insert<dynamic>("[dbo].[SP_ApproveManager]"
+                , dbprams,
+                commandType: CommandType.StoredProcedure));
+            //send email
+            var sendEmail = new SendEmail(myContext);
+            sendEmail.SendEmailApproveManager(getPayroll, getEmployee);
+
+            return Ok(new { Status = "Success", Message = "Overtime Request has been received" });
+        }
+
+        [HttpPost("RejectManager")]
+        public ActionResult RejectManager(ResponseVM responseVM)
+        {
+
+            var getEmployee = myContext.Employees.Where(e => e.NIK == responseVM.NIK).FirstOrDefault();
+
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("RequestId", responseVM.RequestId, DbType.Int32);
+            dbprams.Add("NIK", responseVM.NIK, DbType.String);
+
+            var result = Task.FromResult(_dapper.Insert<dynamic>("[dbo].[SP_RejectManager]"
+                , dbprams,
+                commandType: CommandType.StoredProcedure));
+            //send email
+            var sendEmail = new SendEmail(myContext);
+            sendEmail.SendEmailReject(getEmployee);
+
+            return Ok(new { Status = "Success", Message = "Overtime Request has been rejected" });
+        }
+
+        [HttpPost("ApprovePayroll")]
+        public ActionResult ApprovePayroll(ResponseVM responseVM)
+        {
+
+            var getEmployee = myContext.Employees.Where(e => e.NIK == responseVM.NIK).FirstOrDefault();
+
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("RequestId", responseVM.RequestId, DbType.Int32);
+            dbprams.Add("NIK", responseVM.NIK, DbType.String);
+
+            var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_ApprovePayroll]"
+                , dbprams,
+                commandType: CommandType.StoredProcedure));
+            //send email
+            var sendEmail = new SendEmail(myContext);
+            sendEmail.SendEmailApprovePayroll(getEmployee);
+
+            return Ok(new { Status = "Success", Message = "Overtime Request has been received" });
+        }
+
+        [HttpPost("RejectPayroll")]
+        public ActionResult RejectPayroll(ResponseVM responseVM)
+        {
+
+            var getEmployee = myContext.Employees.Where(e => e.NIK == responseVM.NIK).FirstOrDefault();
+
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("RequestId", responseVM.RequestId, DbType.Int32);
+            dbprams.Add("NIK", responseVM.NIK, DbType.String);
+
+            var result = Task.FromResult(_dapper.Insert<dynamic>("[dbo].[SP_RejectPayroll]"
+                , dbprams,
+                commandType: CommandType.StoredProcedure));
+            //send email
+            var sendEmail = new SendEmail(myContext);
+            sendEmail.SendEmailReject(getEmployee);
+
+            return Ok(new { Status = "Success", Message = "Overtime Request has been rejected" });
+        }
+
+        [HttpPost("GetApproveManager")]
+        public List<dynamic> GetApproveManager(GetVM getVM)
+        {
+            var getEmployee = myContext.Employees.Where(e => e.NIK == getVM.NIK).FirstOrDefault();
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("ManagerId", getVM.NIK, DbType.String);
+
+            List<dynamic> result = _dapper.GetAll<dynamic>("[dbo].[SP_GetApproveManager]"
+               , dbprams,
+               commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        [HttpPost("GetApprovePayroll")]
+        public List<dynamic> GetApprovePayroll(GetVM getVM)
+        {
+            var getEmployee = myContext.Employees.Where(e => e.NIK == getVM.NIK).FirstOrDefault();
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("ManagerId", getVM.NIK, DbType.String);
+
+            List<dynamic> result = _dapper.GetAll<dynamic>("[dbo].[SP_GetApprovePayroll]"
+               , dbprams,
+               commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        [HttpPost("GetHistroryRequest")]
+        public List<dynamic> GetHistoryRequest(GetVM getVM)
+        {
+            var getEmployee = myContext.Employees.Where(e => e.NIK == getVM.NIK).FirstOrDefault();
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("NIK", getVM.NIK, DbType.String);
+
+            List<dynamic> result = _dapper.Get<dynamic>("[dbo].[SP_GetHistoryRequest]"
+               , dbprams,
+               commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        [HttpPost("GetRequestActual")]
+        public List<dynamic> GetRequestActual(GetVM getVM)
+        {
+            var getEmployee = myContext.Employees.Where(e => e.NIK == getVM.NIK).FirstOrDefault();
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("NIK", getVM.NIK, DbType.String);
+
+            List<dynamic> result = _dapper.GetAll<dynamic>("[dbo].[SP_GetRequestAct]"
+               , dbprams,
+               commandType: CommandType.StoredProcedure);
+
+            return result;
         }
 
 
