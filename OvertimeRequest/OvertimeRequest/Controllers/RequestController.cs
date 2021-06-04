@@ -14,6 +14,7 @@ using OvertimeRequest.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -181,12 +182,13 @@ namespace OvertimeRequest.Controllers
         [HttpPost("GetHistroryRequest")]
         public List<dynamic> GetHistoryRequest(GetVM getVM)
         {
+
             var getEmployee = myContext.Employees.Where(e => e.NIK == getVM.NIK).FirstOrDefault();
 
             var dbprams = new DynamicParameters();
             dbprams.Add("NIK", getVM.NIK, DbType.String);
 
-            List<dynamic> result = _dapper.Get<dynamic>("[dbo].[SP_GetHistoryRequest]"
+            List<dynamic> result = _dapper.GetAll<dynamic>("[dbo].[SP_GetHistoryRequest]"
                , dbprams,
                commandType: CommandType.StoredProcedure);
 

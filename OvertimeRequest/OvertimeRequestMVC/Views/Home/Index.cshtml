@@ -1,8 +1,36 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var token = ViewData["token"];
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>
+        @token
+    </p>
+
+    <button id="btnGetData">Request</button>
 </div>
+
+@section scripts{ 
+<script>
+    $(document).ready(function () {
+        $('#btnGetData').click(function () {
+            $.ajax({
+                type: "",
+                url: "Home/GetProjectAPI",
+                success: (data) => {
+                    window.location.href = data
+                    console.log(data)
+                    //alert(data)
+                },
+                error: (data) => {
+                    console.log(data)
+                    //alert(data)
+                }
+            });
+        })
+    })
+</script>
+}

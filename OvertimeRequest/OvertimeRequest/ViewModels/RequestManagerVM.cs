@@ -5,11 +5,8 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.ViewModels
 {
-    public class ApproveVM
+    public class RequestManagerVM
     {
         public int RequestId { get; set; }
-        public string NIK { get; set; }
-        public DateTime StartHours { get; set; }
-        public DateTime EndHours { get; set; }
     }
 }

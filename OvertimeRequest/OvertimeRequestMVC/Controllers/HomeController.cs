@@ -56,7 +56,7 @@ namespace OvertimeRequestMVC.Controllers
                 {
                     var projects = result.Content.ReadAsStringAsync();
                     ViewData["projects"] = projects;
-                    return Url.Action("GetProjects", "Home");
+                    return Url.Action("GetRequest", "Home");
                 }
             }
             return "Unauthorized";
@@ -69,3 +69,4 @@ namespace OvertimeRequestMVC.Controllers
         }
     }
 }
+

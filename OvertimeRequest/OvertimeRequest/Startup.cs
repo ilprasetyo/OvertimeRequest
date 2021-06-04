@@ -36,6 +36,19 @@ namespace OvertimeRequest
             services.AddDbContext<MyContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
 
+            //cors
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyPolicy",
+                    builder =>
+                    {
+                        builder
+                        .WithOrigins("https://localhost:44343")
+                        .AllowAnyHeader().WithMethods("POST", "PUT", "GET");
+                    });
+            });
+
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -108,6 +121,10 @@ namespace OvertimeRequest
             }
 
             app.UseHttpsRedirection();
+
+             //enable using cors
+            app.UseCors();
+
 
             app.UseRouting();
 
