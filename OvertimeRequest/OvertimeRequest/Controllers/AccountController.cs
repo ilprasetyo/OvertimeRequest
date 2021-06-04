@@ -76,8 +76,8 @@ namespace OvertimeRequest.Controllers
 
                 //get token dari kelas jwt services
                 var jwt = new JwtServices(_configuration);
-                var token = jwt.GenerateSecurityToken(result.Name, result.Email, result.Role);
-                return Ok(new { token });
+                var token = jwt.GenerateSecurityToken(result.NIK, result.Email, result.Role);
+                return Ok( token );
 
             }
 
@@ -119,7 +119,7 @@ namespace OvertimeRequest.Controllers
                 var userExisting = myContext.Employees.SingleOrDefault(e => e.Email == forgotVM.email);
                 //var role = context.Employees.SingleOrDefault(e => e.Id == userExisting.Id);
                 string resetCode = Guid.NewGuid().ToString();
-                if (userExisting.Email == forgotVM.email)
+                if (forgotVM.email == userExisting.Email)
                 {
                     var getEmployee = myContext.Employees.Where(e => e.NIK == userExisting.NIK).FirstOrDefault();
                     var jwt = new JwtServices(_configuration);
@@ -142,32 +142,54 @@ namespace OvertimeRequest.Controllers
         }
 
 
-        [HttpPost("ResetPassword")]
+        [HttpPut("ResetPassword")]
         public ActionResult ResetPassword(ResetVM resetVM)
         {
             try
             {
-                var userExisting = myContext.Employees.SingleOrDefault(e => e.Email == resetVM.email);
-                var passwordExisting = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == resetVM.email);
-                if (userExisting.Email == resetVM.email)
+                string token = resetVM.token;
+                var jwtReader = new JwtSecurityTokenHandler();
+                var jwt = jwtReader.ReadJwtToken(token);
+
+                var email = jwt.Claims.First(c => c.Type == "email").Value;
+                var isExist = myContext.Accounts.FirstOrDefault(u => u.Employee.Email == email);
+
+                isExist.Password = BCrypt.Net.BCrypt.HashPassword(resetVM.password);
+
+                var result = accountRepository.Put(isExist);
+                if (result > 0)
                 {
-                    if (resetVM.newPassword == resetVM.confirmPassword)
-                    {
-                        passwordExisting.Password = Hash.HashPassword(resetVM.newPassword);
-                        var save = myContext.SaveChanges();
-                        if (save > 0)
-                        {
-                            return Ok("Your password has been changed.");
-                        }
-                    }
-                    return BadRequest("Your confirmation password is incorrect.");
+                    return Ok(new { Status = "Success", Message = "Password has been reset" });
                 }
-                return BadRequest("Email not found.");
+                return BadRequest();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return BadRequest(e.Message);
+                return BadRequest();
             }
+            //try
+            //{
+            //    var userExisting = myContext.Employees.SingleOrDefault(e => e.Email == resetVM.email);
+            //    var passwordExisting = myContext.Accounts.SingleOrDefault(a => a.Employee.Email == resetVM.email);
+            //    if (userExisting.Email == resetVM.email)
+            //    {
+            //        if (resetVM.newPassword == resetVM.confirmPassword)
+            //        {
+            //            passwordExisting.Password = Hash.HashPassword(resetVM.newPassword);
+            //            var save = myContext.SaveChanges();
+            //            if (save > 0)
+            //            {
+            //                return Ok("Your password has been changed.");
+            //            }
+            //        }
+            //        return BadRequest("Your confirmation password is incorrect.");
+            //    }
+            //    return BadRequest("Email not found.");
+            //}
+            //catch (Exception e)
+            //{
+            //    return BadRequest(e.Message);
+            //}
             //return Ok();
         }
 
