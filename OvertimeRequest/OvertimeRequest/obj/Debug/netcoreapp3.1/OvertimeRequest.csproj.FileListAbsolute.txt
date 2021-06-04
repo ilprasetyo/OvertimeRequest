@@ -85,7 +85,6 @@ C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\b
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\obj\Debug\netcoreapp3.1\OvertimeRequest.csprojAssemblyReference.cache
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\bin\Debug\netcoreapp3.1\System.Web.Http.dll
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll

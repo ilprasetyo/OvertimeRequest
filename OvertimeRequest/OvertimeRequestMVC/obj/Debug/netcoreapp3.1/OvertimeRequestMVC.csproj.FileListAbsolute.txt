@@ -114,7 +114,6 @@ C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMV
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\bin\Debug\netcoreapp3.1\OvertimeRequest.dll
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\bin\Debug\netcoreapp3.1\OvertimeRequest.pdb
-C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\OvertimeRequestMVC.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Home\GetRequest.cshtml.g.cs
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Authentication\ForgotPassword.cshtml.g.cs
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Authentication\Index.cshtml.g.cs
@@ -122,3 +121,6 @@ C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMV
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Authentication\ResetPassword.cshtml.g.cs
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Request\Index.cshtml.g.cs
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Layout.cshtml.g.cs
+C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Home\Admin.cshtml.g.cs
+C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Home\Manager.cshtml.g.cs
+C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Home\Payroll.cshtml.g.cs

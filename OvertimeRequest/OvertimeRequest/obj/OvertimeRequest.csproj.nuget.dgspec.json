@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Kerjaan\\Project\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest.csproj": {}
+    "C:\\Users\\ASUS\\Documents\\GitHub\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest.csproj": {}
   },
   "projects": {
-    "E:\\Kerjaan\\Project\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest.csproj": {
+    "C:\\Users\\ASUS\\Documents\\GitHub\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Kerjaan\\Project\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\Documents\\GitHub\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest.csproj",
         "projectName": "OvertimeRequest",
-        "projectPath": "E:\\Kerjaan\\Project\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest.csproj",
-        "packagesPath": "C:\\Users\\ilpra\\.nuget\\packages\\",
-        "outputPath": "E:\\Kerjaan\\Project\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest\\obj\\",
+        "projectPath": "C:\\Users\\ASUS\\Documents\\GitHub\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ASUS\\Documents\\GitHub\\OvertimeRequest\\OvertimeRequest\\OvertimeRequest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ilpra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -60,51 +60,13 @@
               "target": "Package",
               "version": "[3.1.0, )"
             },
-            "Microsoft.AspNetCore.Cors": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.AspNetCore.Identity": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[5.0.6, )"
-            },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[5.0.6, )"
-            },
-            "Microsoft.EntityFrameworkCore.Analyzers": {
-              "target": "Package",
-              "version": "[5.0.6, )"
-            },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[5.0.6, )"
-            },
-            "Microsoft.EntityFrameworkCore.Relational": {
-              "target": "Package",
-              "version": "[5.0.6, )"
-            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.6, )"
+              "version": "[3.1.0, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
-              "target": "Package",
-              "version": "[5.0.6, )"
-            },
-            "Microsoft.IdentityModel.Tokens": {
-              "target": "Package",
-              "version": "[6.11.1, )"
-            },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.0, )"
             },
