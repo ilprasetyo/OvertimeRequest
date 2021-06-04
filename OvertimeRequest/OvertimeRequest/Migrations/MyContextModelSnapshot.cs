@@ -59,7 +59,7 @@ namespace OvertimeRequest.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
@@ -76,10 +76,17 @@ namespace OvertimeRequest.Migrations
                     b.Property<int?>("PositionId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Quota")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("NIK");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.HasIndex("ManagerId");
 
@@ -186,17 +193,14 @@ namespace OvertimeRequest.Migrations
                     b.Property<int>("Payroll")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quota")
-                        .HasColumnType("int");
-
                     b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartHours")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
