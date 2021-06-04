@@ -40,7 +40,7 @@ namespace OvertimeRequest.Controllers
         [HttpPost("RequestEmployee")]
         public ActionResult RequestEmployee(RequestVM requestVM)
         {
-           
+
             var getEmployee = myContext.Employees.Where(e => e.NIK == requestVM.NIK).FirstOrDefault();
             var getManager = myContext.Employees.Where(e => e.NIK == getEmployee.ManagerId).FirstOrDefault();
             
@@ -138,5 +138,66 @@ namespace OvertimeRequest.Controllers
             sendEmail.SendEmailReject(getEmployee);
             return Ok(new { Status = "Success", Message = "Request Has Been Sent, Check your email" });
         }
+        [HttpPost("GetApproveManager")]
+        public List<dynamic> GetApproveManager(GetVM getVM)
+        {
+            var getEmployee = myContext.Employees.Where(e => e.NIK == getVM.NIK).FirstOrDefault();
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("ManagerId", getVM.NIK, DbType.String);
+
+            List<dynamic> result = _dapper.GetAll<dynamic>("[dbo].[SP_GetApproveManager]"
+               , dbprams,
+               commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        [HttpPost("GetApprovePayroll")]
+        public List<dynamic> GetApprovePayroll(GetVM getVM)
+        {
+            var getEmployee = myContext.Employees.Where(e => e.NIK == getVM.NIK).FirstOrDefault();
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("ManagerId", getVM.NIK, DbType.String);
+
+            List<dynamic> result = _dapper.GetAll<dynamic>("[dbo].[SP_GetApprovePayroll]"
+               , dbprams,
+               commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        [HttpPost("GetHistroryRequest")]
+        public List<dynamic> GetHistoryRequest(GetVM getVM)
+        {
+            var getEmployee = myContext.Employees.Where(e => e.NIK == getVM.NIK).FirstOrDefault();
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("NIK", getVM.NIK, DbType.String);
+
+            List<dynamic> result = _dapper.Get<dynamic>("[dbo].[SP_GetHistoryRequest]"
+               , dbprams,
+               commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        [HttpPost("GetRequestActual")]
+        public List<dynamic> GetRequestActual(GetVM getVM)
+        {
+            var getEmployee = myContext.Employees.Where(e => e.NIK == getVM.NIK).FirstOrDefault();
+
+            var dbprams = new DynamicParameters();
+            dbprams.Add("NIK", getVM.NIK, DbType.String);
+
+            List<dynamic> result = _dapper.GetAll<dynamic>("[dbo].[SP_GetRequestAct]"
+               , dbprams,
+               commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+
     }
 }
