@@ -120,8 +120,8 @@ namespace OvertimeRequest.Controllers
             var dbprams = new DynamicParameters();
             dbprams.Add("RequestId", approveVM.RequestId, DbType.Int32);
             dbprams.Add("NIK", approveVM.NIK, DbType.String);
-            dbprams.Add("start", approveVM.start, DbType.DateTime);
-            dbprams.Add("end", approveVM.end, DbType.DateTime);
+            dbprams.Add("start", approveVM.StartHours, DbType.DateTime);
+            dbprams.Add("end", approveVM.EndHours, DbType.DateTime);
 
             var result = Task.FromResult(_dapper.Insert<dynamic>("[dbo].[SP_ApprovePayroll]"
                 , dbprams,
