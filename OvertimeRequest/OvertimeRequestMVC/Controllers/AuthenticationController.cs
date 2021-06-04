@@ -4,8 +4,8 @@ using Newtonsoft.Json;
 using OvertimeRequest.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -37,14 +37,9 @@ namespace OvertimeRequestMVC.Controllers
 
         public IActionResult ResetPassword()
         {
-            return View();
-        }
-
-        public IActionResult ResetPasswords()
-        {
-            if (Request.Query.ContainsKey("token"))
+            if (Request.Query.ContainsKey("Token"))
             {
-                var token = Request.Query["token"].ToString();
+                var token = Request.Query["Token"].ToString();
                 ViewData["token"] = token;
                 return View();
             }
@@ -87,16 +82,30 @@ namespace OvertimeRequestMVC.Controllers
             StringContent stringContent = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
             var result = client.PostAsync("https://localhost:44323/api/Account/Login", stringContent).Result;
             var token = result.Content.ReadAsStringAsync().Result;
-
             HttpContext.Session.SetString("JWToken", token);
-
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             if (result.IsSuccessStatusCode)
             {
-                //return RedirectToRoute(new { action = "Index", controller = "Home", area = "" });
-                //return Ok(new { result });
-                return Url.Action("Index", "Home");
+                var jwtReader = new JwtSecurityTokenHandler();
+                var jwt = jwtReader.ReadJwtToken(token);
+
+                var role = jwt.Claims.First(c => c.Type == "role").Value;
+                if (role == "Manager")
+                {
+                    return Url.Action("Manager", "Home");
+                }
+                else if(role == "Admin")
+                {
+                    return Url.Action("Admin", "Home");
+                }
+                else if (role == "Payroll")
+                {
+                    return Url.Action("Payroll", "Home");
+                }
+                else
+                {
+                    return Url.Action("Index", "Home");
+                }
             }
             else
             {

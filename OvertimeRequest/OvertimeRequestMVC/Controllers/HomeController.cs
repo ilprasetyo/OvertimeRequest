@@ -24,6 +24,26 @@ namespace OvertimeRequestMVC.Controllers
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult Manager()
+        {
+            return View();
+        }
+
+        public IActionResult Payroll()
+        {
+            return View();
+        }
+
+        public IActionResult GetProjectAdmins()
+        {
+            return View();
+        }
+
+        public IActionResult Index2()
+        {
             var token = HttpContext.Session.GetString("JWToken");
 
 

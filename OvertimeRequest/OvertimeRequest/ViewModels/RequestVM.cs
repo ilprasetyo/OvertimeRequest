@@ -8,9 +8,9 @@ namespace OvertimeRequest.ViewModels
     public class RequestVM
     {
         public string NIK { get; set; }
-        public DateTime StartHours { get; set; }
-        public DateTime EndHours { get; set; }
-        public string Reason { get; set; }
+        public DateTime start { get; set; }
+        public DateTime end { get; set; }
+        public string reason { get; set; }
   
     }
 }

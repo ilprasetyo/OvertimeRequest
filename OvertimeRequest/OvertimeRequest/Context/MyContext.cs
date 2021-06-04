@@ -56,17 +56,17 @@ namespace OvertimeRequest.Context
               .OnDelete(DeleteBehavior.Cascade);
 
             //Account-Employee
-                 modelBuilder.Entity<Account>()
-                .HasOne(Account => Account.Employee)
-                .WithOne(Employee => Employee.Account)
-                .HasForeignKey<Account>(Account => Account.NIK)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Account>()
+           .HasOne(Account => Account.Employee)
+           .WithOne(Employee => Employee.Account)
+           .HasForeignKey<Account>(Account => Account.NIK)
+           .OnDelete(DeleteBehavior.Cascade);
 
             //Position-Employee
-              modelBuilder.Entity<Employee>()
-             .HasOne(Employee => Employee.Position)
-             .WithMany(Position => Position.Employees)
-             .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Employee>()
+           .HasOne(Employee => Employee.Position)
+           .WithMany(Position => Position.Employees)
+           .OnDelete(DeleteBehavior.Cascade);
 
             //Department-Position
             modelBuilder.Entity<Position>()
@@ -81,8 +81,9 @@ namespace OvertimeRequest.Context
 
             //Email should be unique
             modelBuilder.Entity<Employee>()
-            .HasIndex(employee => employee.Email)
-            .IsUnique();
+                .HasIndex(employee => employee.Email)
+                .IsUnique();
+
         }
 
     }

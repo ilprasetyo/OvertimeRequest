@@ -15,6 +15,7 @@ namespace OvertimeRequest.Controllers
     [Authorize]
     //[Authorize(Roles = "Admin")]
     [ApiController]
+    [Authorize]
     public class EmployeeController : BaseController<Employee, EmployeeRepository, int>
     {
         private EmployeeRepository employeeRepository;

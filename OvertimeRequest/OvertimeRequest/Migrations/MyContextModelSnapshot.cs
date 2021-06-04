@@ -15,8 +15,8 @@ namespace OvertimeRequest.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("OvertimeRequest.Models.Account", b =>
@@ -190,8 +190,8 @@ namespace OvertimeRequest.Migrations
                     b.Property<DateTime>("EndHours")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Payroll")
-                        .HasColumnType("int");
+                    b.Property<string>("Payroll")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
@@ -229,6 +229,8 @@ namespace OvertimeRequest.Migrations
                         .HasForeignKey("OvertimeRequest.Models.Account", "NIK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("OvertimeRequest.Models.Employee", b =>
@@ -241,6 +243,10 @@ namespace OvertimeRequest.Migrations
                         .WithMany("Employees")
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Manager");
+
+                    b.Navigation("Position");
                 });
 
             modelBuilder.Entity("OvertimeRequest.Models.EmployeeRequest", b =>
@@ -254,6 +260,10 @@ namespace OvertimeRequest.Migrations
                         .WithMany("EmployeeRequests")
                         .HasForeignKey("RequestId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Request");
                 });
 
             modelBuilder.Entity("OvertimeRequest.Models.EmployeeRole", b =>
@@ -267,6 +277,10 @@ namespace OvertimeRequest.Migrations
                         .WithMany("EmployeeRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("OvertimeRequest.Models.Position", b =>
@@ -275,6 +289,37 @@ namespace OvertimeRequest.Migrations
                         .WithMany("Positions")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("OvertimeRequest.Models.Department", b =>
+                {
+                    b.Navigation("Positions");
+                });
+
+            modelBuilder.Entity("OvertimeRequest.Models.Employee", b =>
+                {
+                    b.Navigation("Account");
+
+                    b.Navigation("EmployeeRequests");
+
+                    b.Navigation("EmployeeRoles");
+                });
+
+            modelBuilder.Entity("OvertimeRequest.Models.Position", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("OvertimeRequest.Models.Request", b =>
+                {
+                    b.Navigation("EmployeeRequests");
+                });
+
+            modelBuilder.Entity("OvertimeRequest.Models.Role", b =>
+                {
+                    b.Navigation("EmployeeRoles");
                 });
 #pragma warning restore 612, 618
         }

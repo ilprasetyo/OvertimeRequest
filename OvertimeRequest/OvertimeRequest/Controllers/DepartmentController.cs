@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.Controllers
 {
-    
+    [Authorize(Roles = "Employee, Manager, Payroll")]
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class DepartmentController : BaseController<Department, DepartmentRepository, int>
     {
+
         private DepartmentRepository departmentRepository;
+
         public DepartmentController(DepartmentRepository departmentRepository) : base(departmentRepository)
         {
             this.departmentRepository = departmentRepository;
         }
-
     }
 }

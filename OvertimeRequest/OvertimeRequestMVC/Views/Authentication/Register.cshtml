@@ -1,10 +1,6 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
     Layout = "Layout";
 }
-
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100 pt-5">
@@ -146,16 +142,21 @@
                     console.log(data)
                     //alert(data)
                     Swal.fire({
-                        text: 'Register has been sent to your address',
+                        text: 'Register success',
                         icon: 'success',
                         timer: 10000
-                    }).then(() => {
+                    }).then(    () => {
                         window.location.href = data;
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            window.location.href = 'https://localhost:44393/Authentication/Index';
+                        }
                     })
+
                 },
                 error: (data) => {
                     console.log(data)
-                    //alert(data)
+                    alert(data)
                 }
             });
         }

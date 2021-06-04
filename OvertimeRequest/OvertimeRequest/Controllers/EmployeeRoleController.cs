@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace OvertimeRequest.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]

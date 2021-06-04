@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OvertimeRequest.Repositories.Interface;
+using Microsoft.AspNetCore.Cors;
 
 namespace OvertimeRequest.Base
 {

@@ -84,9 +84,6 @@ namespace OvertimeRequest
             });
 
 
-            //Register dapper in scope    
-            services.AddScoped<IGenericDapper, GeneralDapper>();
-
             services.AddScoped<AccountRepository>();
             services.AddScoped<DepartmentRepository>();
             services.AddScoped<EmployeeRepository>();
@@ -97,8 +94,9 @@ namespace OvertimeRequest
             services.AddScoped<RequestRepository>();
             services.AddScoped<RoleRepository>();
 
-            services.AddTokenAuthentication(Configuration);
+            services.AddScoped<IGenericDapper, GeneralDapper>();
 
+            services.AddTokenAuthentication(Configuration);
 
         }
 
@@ -127,6 +125,12 @@ namespace OvertimeRequest
 
 
             app.UseRouting();
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
 
             app.UseAuthentication();
 
