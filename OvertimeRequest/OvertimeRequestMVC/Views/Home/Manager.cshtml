@@ -5,4 +5,87 @@
 <div class="text-center">
     <h1 class="display-4">Welcome Home Manager</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div class="content">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="container-fluid">
+                    <table class="display table table-bordered text-dark mydatatable" id="tableact">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text">No</th>
+                                @*<th scope="col">Id</th>*@
+                                <th scope="col" class="text">NIK</th>
+                                <th scope="col" class="text">Name</th>
+                                <th scope="col" class="text">Manager NIK</th>
+                                <th scope="col" class="text">Start</th>
+                                <th scope="col" class="text">End</th>
+                                <th scope="col" class="text">Reason</th>
+                                <th scope="col" class="text">Payroll</th>
+                                <th scope="col" class="text">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+@section Scripts
+{
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+
+    <script>
+        debugger;
+        $(document).ready(function () {
+            $('#tableact').DataTable({
+                "ajax": {
+                    url: 'https://localhost:44323/api/Request/GetApproveManager3',
+                    type: "GET",
+                    dataType: "json",
+                    dataSrc: ""
+                },
+                "columnDefs": [{
+                    targets: [-1, -2, -3],
+                    orderable: false
+                }],
+                "columns": [
+                    //{ "data": "id" },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; }
+                    },
+                    //{ "data": "id" },
+                    { "data": "NIK" },
+                    { "data": "Name" },
+                    { "data": "ManagerId" },
+                    {
+                        render: function (data, type, row) {
+                            var date = moment(row['StartHours']).format('DD MMMM YYYY, h:mm:ss a');
+                            return date;
+                        }
+                    },
+                    {
+                        render: function (data, type, row) {
+                            var date = moment(row['EndHours']).format('DD MMMM YYYY, h:mm:ss a');
+                            return date;
+                        }
+                    },
+                    { "data": "Reason" },
+                    { "data": "Payroll" },
+                    {
+                        'data': 'Status',
+                        "render": function (id) {
+                            return `<a class="popup btn btn-danger" data-toggle="tooltip" data-placement="top" title="Reject" id="btnEdit" onclick="Task(${id})"><i class="fa fa-times" aria-hidden="true"></i></a> | <button class="popup btn btn-success" data-toggle="tooltip" data-placement="top" title="Approve" id="btnDelete" onclick="Delete(${id})"><i class="fa fa-check" aria-hidden="true"></i></a>`;
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}

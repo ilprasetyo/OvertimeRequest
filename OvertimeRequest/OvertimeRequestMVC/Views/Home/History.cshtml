@@ -12,7 +12,7 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="container-fluid">
-                    <table class="display table table-bordered text-dark mydatatable" id="tableact">
+                    <table class="display table table-bordered text-dark mydatatable" id="tablehistory">
                         <thead>
                             <tr>
                                 <th scope="col" class="text">No</th>
@@ -45,9 +45,9 @@
     <script>
         debugger;
         $(document).ready(function () {
-            $('#tableact').DataTable({
+            $('#tablehistory').DataTable({
                 "ajax": {
-                    url: 'https://localhost:44323/api/Request/GetActualRequest3',
+                    url: "https://localhost:44323/api/Request/GetHistroryRequest2",
                     type: "GET",
                     dataType: "json",
                     dataSrc: ""

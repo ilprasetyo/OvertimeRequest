@@ -199,6 +199,17 @@ namespace OvertimeRequest.Controllers
         [HttpGet("GetHistroryRequest2")]
         public List<dynamic> GetHistoryRequest2()
         {
+            string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE(req.[Status] = 'RejectByManager' OR req.[Status] = 'RejectByPayroll' OR req.[Status] = 'ApproveByPayroll')");
+
+            List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+
+            return result;
+        }
+        
+        //yang dipake
+        [HttpGet("GetHistroryRequest3")]
+        public IActionResult GetHistoryRequest3()
+        {
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
             var jwtReader = new JwtSecurityTokenHandler();
             var jwt = jwtReader.ReadJwtToken(token);
@@ -213,7 +224,7 @@ namespace OvertimeRequest.Controllers
 
             List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
 
-            return result;
+            return Ok(result);
         }
 
         //yangdipake
@@ -238,6 +249,20 @@ namespace OvertimeRequest.Controllers
         } 
         
         //yangdipake
+        [HttpGet("GetActualRequest3")]
+        public List<dynamic> GetActualRequest3()
+        {
+
+            //var dbprams = new DynamicParameters();
+            //dbprams.Add("NIK", getVM.NIK, DbType.String);
+            string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE(req.[Status] = 'Waiting' OR req.[Status] = 'ApproveByManager')");
+
+            List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+
+            return result;
+        } 
+        
+        //yangdipake
         [HttpGet("GetApproveManager2")]
         public List<dynamic> GetApproveManager2()
         {
@@ -252,6 +277,19 @@ namespace OvertimeRequest.Controllers
             //var dbprams = new DynamicParameters();
             //dbprams.Add("NIK", getVM.NIK, DbType.String);
             string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE req.[Status] = 'Waiting' AND emp.ManagerId = '"+getEmployee.NIK+"'");
+
+            List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+
+            return result;
+        }
+        
+        //yangdipake
+        [HttpGet("GetApproveManager3")]
+        public List<dynamic> GetApproveManager3()
+        {
+            //var dbprams = new DynamicParameters();
+            //dbprams.Add("NIK", getVM.NIK, DbType.String);
+            string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE req.[Status] = 'Waiting'");
 
             List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
 

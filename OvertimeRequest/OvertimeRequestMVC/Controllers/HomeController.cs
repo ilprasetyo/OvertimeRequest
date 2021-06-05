@@ -27,6 +27,11 @@ namespace OvertimeRequestMVC.Controllers
         {
             return View();
         }
+        
+        public IActionResult History()
+        {
+            return View();
+        }
 
         public IActionResult Manager()
         {
