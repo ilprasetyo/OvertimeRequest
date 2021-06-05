@@ -195,6 +195,69 @@ namespace OvertimeRequest.Controllers
             return result;
         }
 
+        //yang dipake
+        [HttpGet("GetHistroryRequest2")]
+        public List<dynamic> GetHistoryRequest2()
+        {
+            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var jwtReader = new JwtSecurityTokenHandler();
+            var jwt = jwtReader.ReadJwtToken(token);
+
+            var NIK = jwt.Claims.First(t => t.Type == "unique_name").Value;
+
+            var getEmployee = myContext.Employees.Where(e => e.NIK == NIK).FirstOrDefault();
+
+            //var dbprams = new DynamicParameters();
+            //dbprams.Add("NIK", getVM.NIK, DbType.String);
+            string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE(req.[Status] = 'RejectByManager' OR req.[Status] = 'RejectByPayroll' OR req.[Status] = 'ApproveByPayroll') AND emp.NIK = '" + getEmployee.NIK+"'");
+
+            List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+
+            return result;
+        }
+
+        //yangdipake
+        [HttpGet("GetActualRequest2")]
+        public List<dynamic> GetActualRequest2()
+        {
+            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var jwtReader = new JwtSecurityTokenHandler();
+            var jwt = jwtReader.ReadJwtToken(token);
+
+            var NIK = jwt.Claims.First(t => t.Type == "unique_name").Value;
+
+            var getEmployee = myContext.Employees.Where(e => e.NIK == NIK).FirstOrDefault();
+
+            //var dbprams = new DynamicParameters();
+            //dbprams.Add("NIK", getVM.NIK, DbType.String);
+            string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE(req.[Status] = 'Waiting' OR req.[Status] = 'ApproveByManager') AND emp.NIK = '"+getEmployee.NIK+"'");
+
+            List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+
+            return result;
+        } 
+        
+        //yangdipake
+        [HttpGet("GetApproveManager2")]
+        public List<dynamic> GetApproveManager2()
+        {
+            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var jwtReader = new JwtSecurityTokenHandler();
+            var jwt = jwtReader.ReadJwtToken(token);
+
+            var NIK = jwt.Claims.First(t => t.Type == "unique_name").Value;
+
+            var getEmployee = myContext.Employees.Where(e => e.NIK == NIK).FirstOrDefault();
+
+            //var dbprams = new DynamicParameters();
+            //dbprams.Add("NIK", getVM.NIK, DbType.String);
+            string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE req.[Status] = 'Waiting' AND emp.ManagerId = '"+getEmployee.NIK+"'");
+
+            List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+
+            return result;
+        }
+
         [HttpPost("GetRequestActual")]
         public List<dynamic> GetRequestActual(GetVM getVM)
         {
@@ -211,6 +274,7 @@ namespace OvertimeRequest.Controllers
             return result;
         }
 
+        //yang dipake
         [HttpGet("GetApprovePayroll")]
         public List<dynamic> GetApprovePayroll()
         {
