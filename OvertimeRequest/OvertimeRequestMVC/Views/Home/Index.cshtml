@@ -47,7 +47,8 @@
         $(document).ready(function () {
             $('#tableact').DataTable({
                 "ajax": {
-                    url: 'https://localhost:44323/api/Request/GetActualRequest3',
+                    url: '/Request/GetActRequest',
+                    //url: 'https://localhost:44323/api/Request/GetActualRequest3',
                     type: "GET",
                     dataType: "json",
                     dataSrc: ""

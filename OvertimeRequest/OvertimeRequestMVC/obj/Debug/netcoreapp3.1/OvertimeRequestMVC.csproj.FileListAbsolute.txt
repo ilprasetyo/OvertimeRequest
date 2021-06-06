@@ -219,3 +219,8 @@ E:\Kerjaan\Project\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\
 E:\Kerjaan\Project\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Authentication\Register.cshtml.g.cs
 E:\Kerjaan\Project\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Layout.cshtml.g.cs
 E:\Kerjaan\Project\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Authentication\ResetPassword.cshtml.g.cs
+E:\Kerjaan\Project\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Home\Admin.cshtml.g.cs
+E:\Kerjaan\Project\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Home\Manager.cshtml.g.cs
+E:\Kerjaan\Project\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Home\Payroll.cshtml.g.cs
+E:\Kerjaan\Project\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Shared\LayoutEmp.cshtml.g.cs
+E:\Kerjaan\Project\OvertimeRequest\OvertimeRequest\OvertimeRequestMVC\obj\Debug\netcoreapp3.1\Razor\Views\Home\History.cshtml.g.cs

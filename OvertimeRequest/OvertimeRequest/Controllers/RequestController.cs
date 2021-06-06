@@ -208,7 +208,7 @@ namespace OvertimeRequest.Controllers
         
         //yang dipake
         [HttpGet("GetHistroryRequest3")]
-        public IActionResult GetHistoryRequest3()
+        public IEnumerable<dynamic> GetHistoryRequest3()
         {
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
             var jwtReader = new JwtSecurityTokenHandler();
@@ -222,14 +222,14 @@ namespace OvertimeRequest.Controllers
             //dbprams.Add("NIK", getVM.NIK, DbType.String);
             string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE(req.[Status] = 'RejectByManager' OR req.[Status] = 'RejectByPayroll' OR req.[Status] = 'ApproveByPayroll') AND emp.NIK = '" + getEmployee.NIK+"'");
 
-            List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+            dynamic result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
 
-            return Ok(result);
+            return result;
         }
 
         //yangdipake
         [HttpGet("GetActualRequest2")]
-        public List<dynamic> GetActualRequest2()
+        public IEnumerable<dynamic> GetActualRequest2()
         {
             string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
             var jwtReader = new JwtSecurityTokenHandler();
@@ -243,7 +243,7 @@ namespace OvertimeRequest.Controllers
             //dbprams.Add("NIK", getVM.NIK, DbType.String);
             string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE(req.[Status] = 'Waiting' OR req.[Status] = 'ApproveByManager') AND emp.NIK = '"+getEmployee.NIK+"'");
 
-            List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+            IEnumerable<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
 
             return result;
         } 

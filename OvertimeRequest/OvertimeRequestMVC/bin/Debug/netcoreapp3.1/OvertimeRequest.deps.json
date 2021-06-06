@@ -31,7 +31,7 @@
     ".NETCoreApp,Version=v3.1": {
       "OvertimeRequest/1.0.0": {
         "dependencies": {
-          "BCrypt.Net-Next": "3.1.0",
+          "BCrypt.Net-Next": "4.0.2",
           "Dapper": "2.0.90",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.0",
           "Microsoft.AspNetCore.Cors": "2.2.0",
@@ -324,15 +324,15 @@
           "OvertimeRequest.dll": {}
         }
       },
-      "BCrypt.Net-Next/3.1.0": {
+      "BCrypt.Net-Next/4.0.2": {
         "runtime": {
-          "lib/netstandard2.0/BCrypt.Net-Next.dll": {
-            "assemblyVersion": "3.1.0.0",
-            "fileVersion": "3.1.0.0"
+          "lib/netcoreapp3.1/BCrypt.Net-Next.dll": {
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.0.2.0"
           }
         },
         "compile": {
-          "lib/netstandard2.0/BCrypt.Net-Next.dll": {}
+          "lib/netcoreapp3.1/BCrypt.Net-Next.dll": {}
         }
       },
       "Dapper/2.0.90": {
@@ -4223,12 +4223,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "BCrypt.Net-Next/3.1.0": {
+    "BCrypt.Net-Next/4.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-zpAiSXd1mvPh/+cG0ItL8bD9dkPZ92D/QmgL4OlikxBBHeb4Vm39eSwk2igAdbXFp7Vx9DnRxf4PjB+5+8V4cA==",
-      "path": "bcrypt.net-next/3.1.0",
-      "hashPath": "bcrypt.net-next.3.1.0.nupkg.sha512"
+      "sha512": "sha512-LyNKpIpr4GraRD9+xlTviyxxbZpF6J4xJf7DvraC1mR8PSN/KonGc4rt8C/fjkD3vaEvgA7BcvsbHFCOjgczyQ==",
+      "path": "bcrypt.net-next/4.0.2",
+      "hashPath": "bcrypt.net-next.4.0.2.nupkg.sha512"
     },
     "Dapper/2.0.90": {
       "type": "package",
