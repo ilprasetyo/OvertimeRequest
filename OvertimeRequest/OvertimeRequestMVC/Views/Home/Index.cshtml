@@ -9,28 +9,99 @@
     <p>
         @token
     </p>
-
-    <button id="btnGetData">Request</button>
+    <div class="p-3">
+        <h4 class="text-muted font-18 m-b-5 text-center">Welcome</h4>
+        <p class="text-muted text-center">Overtime Request Form Empploye.</p>
+        <a href="javascript:void(0)" class="btn bg-transparant text-success" data-toggle="modal" data-target="#Request">Add Request</a>
+        <div class="container-fluid mt-5">
+            <table id="myTable" class="table table-striped table-bordered dataTable" style="width:100%">
+                <thead class="thead-light">
+                    <tr role="row">
+                        <th>No</th>
+                        <th>NIK</th>
+                        <th>Start Hours</th>
+                        <th>End Hours</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+            </table>
+        </div>
+    </div>
+   
+    <div class="modal fade" id="Request" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add Request</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-request">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="name" class="col-form-label">Start Hours:</label>
+                                    <input type="datetime-local" class="form-control" id="start" name="starthours">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-form-label">End Hours:</label>
+                                    <input type="datetime-local" class="form-control" id="end" name="endhours">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-form-label">Reason:</label>
+                                    <textarea type="text" class="form-control" id="reason" name="reason"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-@section scripts{ 
-<script>
-    $(document).ready(function () {
-        $('#btnGetData').click(function () {
+@section scripts{
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        
+        $(document).ready(function () {
+            $('#form-request').submit(function (e) {
+                e.preventDefault();
+                request();
+            })
+        })
+        const request = () => {
+            let User = {
+               /* nik: $("#nik").val(),*/
+                start: $("#start").val(),
+                end: $("#end").val(),
+                reason: $("#reason").val()
+            };
             $.ajax({
-                type: "",
-                url: "Home/GetProjectAPI",
+                type: "POST",
+                url: '/Request/SubmitRequest',
+                data: User,
                 success: (data) => {
-                    window.location.href = data
                     console.log(data)
                     //alert(data)
+                    Swal.fire({
+                        text: 'Request success',
+                        icon: 'success',
+                        timer: 10000
+                    }).then(() => {
+                        window.location.href = 'https://localhost:44393/Home/Index';
+                    })
                 },
                 error: (data) => {
                     console.log(data)
-                    //alert(data)
+                    alert(data)
                 }
             });
-        })
-    })
-</script>
+        }
+    </script>
 }

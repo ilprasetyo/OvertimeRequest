@@ -39,28 +39,28 @@ namespace OvertimeRequest.Controllers
             _dapper = dapper;
         }
 
-        [Authorize(Roles = "Employee, Manager")]
+        //[Authorize(Roles = "Employee, Manager")]
         [HttpPost("RequestEmployee")]
         public ActionResult RequestEmployee(RequestVM requestVM)
         {
-            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
-            var jwtReader = new JwtSecurityTokenHandler();
-            var jwt = jwtReader.ReadJwtToken(token);
+            //string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            //var jwtReader = new JwtSecurityTokenHandler();
+            //var jwt = jwtReader.ReadJwtToken(token);
 
-            var NIK = jwt.Claims.First(c => c.Type == "unique_name").Value;
-            var isExist = myContext.Employees.FirstOrDefault(u => u.NIK == NIK);
+            //var NIK = jwt.Claims.First(c => c.Type == "unique_name").Value;
+            //var isExist = myContext.Employees.FirstOrDefault(u => u.NIK == NIK);
 
             var getEmployee = myContext.Employees.Where(e => e.NIK == requestVM.NIK).FirstOrDefault();
             var getManager = myContext.Employees.Where(e => e.NIK == getEmployee.ManagerId).FirstOrDefault();
-            if (isExist != null)
-            {
+            //if (isExist != null)
+            //{
                 var dbprams = new DynamicParameters();
                 dbprams.Add("NIK", requestVM.NIK, DbType.String);
-                dbprams.Add("start", requestVM.start, DbType.DateTime);
-                dbprams.Add("end", requestVM.end, DbType.DateTime);
-                dbprams.Add("reason", requestVM.reason, DbType.String);
+                dbprams.Add("StartHours", requestVM.start, DbType.DateTime);
+                dbprams.Add("EndHours", requestVM.end, DbType.DateTime);
+                dbprams.Add("Reason", requestVM.reason, DbType.String);
 
-                var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_Request]"
+                var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_OvertimeRequest]"
                     , dbprams,
                     commandType: CommandType.StoredProcedure));
                 //send email
@@ -68,9 +68,9 @@ namespace OvertimeRequest.Controllers
                 sendEmail.SendEmailSubmitRequest(getEmployee);
                 sendEmail.SendEmailRequestToManager(getManager, getEmployee);
                 return Ok(new { Status = "Success", Message = "Request Has Been Sent, Check your email" });
-            }
+           // }
 
-            return BadRequest(new { Status = "Error", Message = "Create Project failed" });
+          //  return BadRequest(new { Status = "Error", Message = "Create Project failed" });
         }
         
         [HttpPost("ApproveManager")]
@@ -84,7 +84,7 @@ namespace OvertimeRequest.Controllers
             dbprams.Add("RequestId", responseVM.RequestId, DbType.Int32);
             dbprams.Add("NIK", responseVM.NIK, DbType.String);
 
-            var result = Task.FromResult(_dapper.Insert<dynamic>("[dbo].[SP_ApproveManager]"
+            var result = Task.FromResult(_dapper.Insert<int>("[dbo].[SP_ApproveManager]"
                 , dbprams,
                 commandType: CommandType.StoredProcedure));
             //send email
@@ -244,6 +244,69 @@ namespace OvertimeRequest.Controllers
             //    throw e;
             //}
 
+        }
+
+        //yang dipake
+        [HttpGet("GetHistroryRequest2")]
+        public List<dynamic> GetHistoryRequest2()
+        {
+            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var jwtReader = new JwtSecurityTokenHandler();
+            var jwt = jwtReader.ReadJwtToken(token);
+
+            var NIK = jwt.Claims.First(t => t.Type == "unique_name").Value;
+
+            var getEmployee = myContext.Employees.Where(e => e.NIK == NIK).FirstOrDefault();
+
+            //var dbprams = new DynamicParameters();
+            //dbprams.Add("NIK", getVM.NIK, DbType.String);
+            string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE(req.[Status] = 'RejectByManager' OR req.[Status] = 'RejectByPayroll' OR req.[Status] = 'ApproveByPayroll') AND emp.NIK = '" + getEmployee.NIK + "'");
+
+            List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+
+            return result;
+        }
+
+        //yangdipake
+        [HttpGet("GetActualRequest2")]
+        public List<dynamic> GetActualRequest2()
+        {
+            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var jwtReader = new JwtSecurityTokenHandler();
+            var jwt = jwtReader.ReadJwtToken(token);
+
+            var NIK = jwt.Claims.First(t => t.Type == "unique_name").Value;
+
+            var getEmployee = myContext.Employees.Where(e => e.NIK == NIK).FirstOrDefault();
+
+            //var dbprams = new DynamicParameters();
+            //dbprams.Add("NIK", getVM.NIK, DbType.String);
+            string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE(req.[Status] = 'Waiting' OR req.[Status] = 'ApproveByManager') AND emp.NIK = '" + getEmployee.NIK + "'");
+
+            List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+
+            return result;
+        }
+
+        //yangdipake
+        [HttpGet("GetApproveManager2")]
+        public List<dynamic> GetApproveManager2()
+        {
+            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var jwtReader = new JwtSecurityTokenHandler();
+            var jwt = jwtReader.ReadJwtToken(token);
+
+            var NIK = jwt.Claims.First(t => t.Type == "unique_name").Value;
+
+            var getEmployee = myContext.Employees.Where(e => e.NIK == NIK).FirstOrDefault();
+
+            //var dbprams = new DynamicParameters();
+            //dbprams.Add("NIK", getVM.NIK, DbType.String);
+            string query = string.Format("SELECT emp.NIK, emp.[Name], emp.ManagerId, req.StartHours, req.EndHours, req.Reason, req.Payroll, req.[Status] FROM TB_M_Employee AS emp INNER JOIN TB_T_EmployeeRequest AS empR ON empR.EmployeeNIK = emp.NIK INNER JOIN TB_M_Request AS req ON req.Id = empR.RequestId WHERE req.[Status] = 'Waiting' AND emp.ManagerId = '" + getEmployee.NIK + "'");
+
+            List<dynamic> result = _dapper.GetAllNoParam<dynamic>(query, CommandType.Text);
+
+            return result;
         }
 
     }
