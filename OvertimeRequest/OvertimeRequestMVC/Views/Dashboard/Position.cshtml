@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "LayoutAdmin";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome Position Data</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <table class="display table table-bordered text-dark mydatatable" id="tablePos">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text">No</th>
+                            <th scope="col" class="text">Name</th>
+                            <th scope="col" class="text">Department</th>
+                            @*<th scope="col">Id</th>*@
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+
+    <script>
+        debugger;
+        $(document).ready(function () {
+            $('#tablePos').DataTable({
+                "ajax": {
+                    url: "https://localhost:44323/api/Department/GetDepartment",
+                    //url: "/Request/GetHistoryRequest",
+                    type: "GET",
+                    dataType: "json",
+                    dataSrc: ""
+                },
+                "columns": [
+                    //{ "data": "id" },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; }
+                    },
+                    //{ "data": "id" },
+                    { "data": "name" },
+                    {
+                        "data": "Department"   }
+                ]
+            });
+        });
+    </script>
+}

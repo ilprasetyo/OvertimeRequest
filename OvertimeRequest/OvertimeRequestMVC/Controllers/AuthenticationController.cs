@@ -92,19 +92,19 @@ namespace OvertimeRequestMVC.Controllers
                 var role = jwt.Claims.First(c => c.Type == "role").Value;
                 if (role == "Manager")
                 {
-                    return Url.Action("Manager", "Home");
+                    return Url.Action("Manager", "Dashboard");
                 }
                 else if(role == "Admin")
                 {
-                    return Url.Action("Admin", "Home");
+                    return Url.Action("Admin", "Dashboard");
                 }
                 else if (role == "Payroll")
                 {
-                    return Url.Action("Payroll", "Home");
+                    return Url.Action("Payroll", "Dashboard");
                 }
                 else
                 {
-                    return Url.Action("Index", "Home");
+                    return Url.Action("Employee", "Dashboard");
                 }
             }
             else
@@ -128,6 +128,7 @@ namespace OvertimeRequestMVC.Controllers
             {
                 //return BadRequest(new { result });
                 return "Error";
+                
             }
         }
 

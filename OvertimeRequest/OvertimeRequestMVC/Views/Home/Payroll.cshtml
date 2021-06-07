@@ -1,24 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "LayoutPayroll";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome Home Payroll</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
-    <div class="content-wrapper">
+    <div class="content">
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
                 <div class="container-fluid">
-                    <table class="display table table-bordered text-dark mydatatable" id="myTable">
+                    <table class="display table table-bordered text-dark mydatatable" id="tableact">
                         <thead>
                             <tr>
                                 <th scope="col" class="text">No</th>
-                                @*<th scope="col">Id</th>*@
+                                <th scope="col">Id</th>
                                 <th scope="col" class="text">NIK</th>
-                                <th scope="col" class="text">Manager NIK</th>
                                 <th scope="col" class="text">Name</th>
+                                <th scope="col" class="text">Manager NIK</th>
                                 <th scope="col" class="text">Start</th>
                                 <th scope="col" class="text">End</th>
                                 <th scope="col" class="text">Reason</th>
@@ -31,9 +32,63 @@
             </div>
         </div>
     </div>
-
 </div>
 
+<div class="modal fade" id="Request" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Approve Request</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formrole">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="id" class="col-form-label">Id:</label>
+                                <input disabled type="text" class="form-control" id="id" name="id">
+                            </div>
+                            <div class="form-group">
+                                <label for="id" class="col-form-label">NIK:</label>
+                                <input disabled type="text" class="form-control" id="nik" name="nik">
+                            </div>
+                            <div class="form-group">
+                                <label for="id" class="col-form-label">Name:</label>
+                                <input disabled type="text" class="form-control" id="name" name="name">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Start Hours:</label>
+                                <input disabled type="text" class="form-control" id="starthours" name="startshours">
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">End Hours:</label>
+                                <input disabled type="text" class="form-control" id="endhours" name="endhours">
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Reason:</label>
+                                <input disabled id="reason" class="form-control" name="reason">
+                            </div>
+                            <div class="form-group">
+                                <label for="id" class="col-form-label">Payroll:</label>
+                                <input disabled type="text" class="form-control" id="payroll" name="payroll">
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="approve()">Approve</button>
+                <button type="button" class="btn btn-primary" onclick="reject()">Reject</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts
 {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
@@ -45,9 +100,9 @@
     <script>
         debugger;
         $(document).ready(function () {
-            $('#myTable').DataTable({
+            $('#tableact').DataTable({
                 "ajax": {
-                    url: "https://localhost:44323/api/Request/GetApprovePayroll",
+                    url: 'https://localhost:44323/api/Request/GetApprovePayroll',
                     type: "GET",
                     dataType: "json",
                     dataSrc: ""
@@ -62,45 +117,146 @@
                         "data": null,
                         "render": function (data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; }
                     },
-                    //{ "data": "id" },
+                    { "data": "Id" },
                     { "data": "NIK" },
-                    { "data": "ManagerId" },
                     { "data": "Name" },
+                    { "data": "ManagerId" },
                     {
                         render: function (data, type, row) {
-                            var date = moment(row['starthours']).format('DD MMMM YYYY, h:mm:ss a');
+                            var date = moment(row['StartHours']).format('DD MMMM YYYY, h:mm:ss a');
                             return date;
                         }
                     },
                     {
                         render: function (data, type, row) {
-                            var date = moment(row['endhours']).format('DD MMMM YYYY, h:mm:ss a');
+                            var date = moment(row['EndHours']).format('DD MMMM YYYY, h:mm:ss a');
                             return date;
                         }
                     },
                     { "data": "Reason" },
                     { "data": "Payroll" },
                     {
-                        render: function (data, type, row) {
-                            var tombol = '<button type="button" class="btn btn-warning">';
-                            tombol += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">';
-                            tombol += '<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />';
-                            tombol += '</svg>';
-                            tombol += '</button>';
-
-                            tombol += '<button type="button" class="btn btn-danger">';
-                            tombol += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">';
-                            tombol += '<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />';
-                            tombol += '<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />';
-                            tombol += '</svg>';
-                            tombol += '</button>';
-
-                            return tombol;
-                        },
-                        searchable: false
+                        'data': null,
+                        "render": function (data, type, row, meta) {
+                            return `<button class="btn btn-primary" type="button" id="showdata"><a><i class="fa fa-eye" aria-hidden="true"></i></a></button>`;
+                        }
                     }
                 ]
             });
         });
+
+        function approve() {
+            var id = $('#Id').val();
+            console.log("put accessed");
+            Approve(id);
+        }
+
+        function reject() {
+            var id = $('#Id').val();
+            console.log("put accessed");
+            Reject(id);
+        }
+
+        $("#tableact").on('click', '#showdata', function () {
+            var data = $("#tableact").DataTable().row($(this).parents('tr')).data();
+            console.log(data);
+            $("#Request").modal("show");
+            $("#nik").val(data.NIK);
+            $("#name").val(data.Name);
+            $("#starthours").val(moment(data.StartHours).format('DD MMMM YYYY, h:mm:ss a'));
+            $("#endhours").val(moment(data.EndHours).format('DD MMMM YYYY, h:mm:ss a'));
+            $("#reason").val(data.Reason);
+            $("#payroll").val(data.Payroll);
+            $("#id").val(data.Id);
+        });
+
+
+        function Get(Id) {
+            console.log(Id);
+            $.ajax({
+                url: "/Approve/Get",
+                data: { Id: Id }
+            }).done((result) => {
+                console.log(result);
+                var obj = JSON.parse(result);
+                $("#Request").modal("show");
+                $("#nik").val(data.NIK);
+                $("#name").val(data.Name);
+                $("#starthours").val(data.StartHours);
+                $("#endhours").val(data.EndHours);
+                $("#reason").val(data.Reason);
+                $("#payroll").val(data.Payroll);
+                $("#id").val(data.Id);
+            }).fail((error) => {
+                console.log(error);
+            })
+        }
+
+        function Approve(Id) {
+            var approve = new Object();
+            approve.RequestId = $('#id').val();
+            approve.NIK = $('#nik').val();
+            $.ajax({
+                type: "POST",
+                url: '/ApprovePayroll/Approve',
+                data: approve
+            }).done((result) => {
+                console.log("ok");
+                if (result == 200) {
+                    swal('Success', 'Update Successfully', 'success').then(() => {
+                        location.reload(true)
+                    });
+                    $('#Request').modal('hide');
+                    $("#nik").val(null);
+                    $("#name").val(null);
+                    $("#starthours").val(null);
+                    $("#endhours").val(null);
+                    $("#reason").val(null);
+                    $("#payroll").val(null);
+                    $("#id").val(null);
+                    /*$("#statusrequest").val(null);*/
+                    //$("#ApprovedHRD").val(null);
+                    //$("#ApprovedManager").val(null);
+                    table.ajax.reload();
+                }
+                else {
+                    swal('Error', 'Something Went Wrong', 'error').then(() => {
+                        location.reload(true)
+                    });
+                }
+            }).fail((error) => {
+                console.log(error)
+            });
+        }
+
+        function Reject(Id) {
+            var reject = new Object();
+            reject.RequestId = $('#id').val();
+            reject.NIK = $('#nik').val();
+            $.ajax({
+                type: "PUT",
+                url: '/ApprovePayroll/Reject',
+                data: reject
+            }).done((result) => {
+
+                if (result == 200) {
+                    swal('Success', 'Update Successfully', 'success');
+                    $('#Request').modal('hide');
+                    $("#id").val(null);
+                    $("#nik").val(null);
+                    $("#name").val(null);
+                    $("#starthours").val(null);
+                    $("#endhours").val(null);
+                    $("#reason").val(null);
+                    $("#payroll").val(null);
+                    table.ajax.reload();
+                }
+                else {
+                    swal('Error', 'Something Went Wrong', 'error');
+                }
+            }).fail((error) => {
+                console.log(error)
+            });
+        }
     </script>
 }

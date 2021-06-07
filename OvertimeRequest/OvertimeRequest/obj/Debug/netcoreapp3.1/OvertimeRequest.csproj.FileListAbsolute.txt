@@ -97,3 +97,4 @@ C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\b
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\bin\Debug\netcoreapp3.1\Swashbuckle.Core.dll
 C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\obj\Debug\netcoreapp3.1\OvertimeRequest.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\ASUS\Documents\GitHub\OvertimeRequest\OvertimeRequest\OvertimeRequest\obj\Debug\netcoreapp3.1\OvertimeRequest.csprojAssemblyReference.cache

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using OvertimeRequestMVC.Models;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,15 @@ namespace OvertimeRequestMVC.Controllers
         }
 
         public IActionResult Payroll()
+        {
+            return View();
+        }
+
+        public IActionResult Admin()
+        {
+            return View();
+        }
+        public IActionResult History()
         {
             return View();
         }
@@ -86,6 +96,25 @@ namespace OvertimeRequestMVC.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public List<dynamic> GetHistoryRequest()
+        {
+            var token = HttpContext.Session.GetString("JWToken");
+
+            if (token != null)
+            {
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var result = client.GetAsync("https://localhost:44323/api/Request/GetHistroryRequest2").Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var projects = result.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<List<dynamic>>(projects);
+                    return data;
+                }
+            }
+            return null;
         }
     }
 }

@@ -43,7 +43,7 @@ namespace OvertimeRequest
                     builder =>
                     {
                         builder
-                        .WithOrigins("https://localhost:44343")
+                        .WithOrigins("https://localhost:44393", "https://localhost:44323")
                         .AllowAnyHeader().WithMethods("POST", "PUT", "GET");
                     });
             });
