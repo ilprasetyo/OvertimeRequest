@@ -36,15 +36,15 @@ namespace OvertimeRequest
             services.AddDbContext<MyContext>(options =>
                                options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
             services.AddCors();
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("MyAllowSpecificOrigins",
-            //                      builder =>
-            //                      {
-            //                          builder.WithOrigins("http://www.test-cors.org", "https://localhost:44393/", "https://localhost:44323/")
-            //                          .AllowAnyHeader().WithMethods("POST", "PUT", "GET");
-            //                      });
-            //});
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyAllowSpecificOrigins",
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://www.test-cors.org", "https://localhost:44393/", "https://localhost:44323/")
+                                      .AllowAnyHeader().WithMethods("POST", "PUT", "GET");
+                                  });
+            });
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {

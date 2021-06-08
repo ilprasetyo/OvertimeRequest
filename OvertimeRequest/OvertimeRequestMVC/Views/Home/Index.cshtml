@@ -45,18 +45,19 @@
     <script>
         debugger;
         $(document).ready(function () {
+            //$.fn.dataTable.ext.errMode = 'throw';
             $('#tableact').DataTable({
                 "ajax": {
-                    //url: '/Request/GetActRequest',
+                    //url: '/Request/HistoryByNIK',
                     url: 'https://localhost:44323/api/Request/GetActualRequest3',
                     type: "GET",
                     dataType: "json",
                     dataSrc: ""
                 },
-                "columnDefs": [{
-                    targets: [-1, -2, -3],
-                    orderable: false
-                }],
+                //"columnDefs": [{
+                //    targets: [-1, -2, -3],
+                //    orderable: false
+                //}],
                 "columns": [
                     //{ "data": "id" },
                     {

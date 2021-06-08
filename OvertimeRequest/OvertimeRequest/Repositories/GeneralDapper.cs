@@ -15,6 +15,7 @@ namespace OvertimeRequest.Repositories
     {
         private readonly IConfiguration _config;
         private string Connectionstring = "MyConnection";
+        //private readonly IDbConnection _connection;
 
         public GeneralDapper(IConfiguration config)
         {
@@ -125,6 +126,13 @@ namespace OvertimeRequest.Repositories
         {
             using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
             return db.Query<T>(query, commandType).FirstOrDefault();
+        }
+
+
+
+        public T GetNoParam<T>(string query, CommandType commandType = CommandType.Text)
+        {
+            throw new NotImplementedException();
         }
     }
 }

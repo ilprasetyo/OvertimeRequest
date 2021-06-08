@@ -68,13 +68,13 @@
                     { "data": "Name" },
                     {
                         render: function (data, type, row) {
-                            var date = moment(row['starthours']).format('DD MMMM YYYY, h:mm:ss a');
+                            var date = moment(row['StartHours']).format('DD MMMM YYYY, h:mm:ss a');
                             return date;
                         }
                     },
                     {
                         render: function (data, type, row) {
-                            var date = moment(row['endhours']).format('DD MMMM YYYY, h:mm:ss a');
+                            var date = moment(row['EndHours']).format('DD MMMM YYYY, h:mm:ss a');
                             return date;
                         }
                     },
